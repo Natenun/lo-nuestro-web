@@ -1,0 +1,36 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f9f9f9;
+    color: #333;
+}
+header {
+    background: #007f5f;
+    color: white;
+    padding: 1em;
+    text-align: center;
+}
+section {
+    padding: 2em;
+}
+.dashboard-cards {
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+}
+.card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1em;
+    flex: 1 1 30%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+footer {
+    background: #eee;
+    text-align: center;
+    padding: 1em;
+    margin-top: 2em;
+}
