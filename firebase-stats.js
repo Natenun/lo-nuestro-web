@@ -87,15 +87,21 @@ async function cargarEstadisticas() {
       elCap.className = `delta ${deltaCap.signo}`;
       elCap.innerText = deltaCap.texto;
 
-      // Delta rendimiento
-      if (dataPrev.capitalizacion != null) {
-        const prevRend = dataPrev.capitalizacion != null ? Math.round(((Number(dataPrev.capitalizacion)||0) - (Number(dataPrev.capitalizacion)||0)) / (Number(dataPrev.capitalizacion)||1) * 100) : 0;
+            // Delta rendimiento usando campo rendimiento del mes anterior si existe
+      if (dataPrev.rendimiento != null) {
+        const prevRend = Number(dataPrev.rendimiento) || 0;
         const deltaRen = formatoDelta(rendimiento - prevRend);
         const elRen = document.getElementById('delta-rendimiento');
         elRen.className = `delta ${deltaRen.signo}`;
         elRen.innerText = deltaRen.texto;
       }
     }
+  } catch (err) {
+    console.error('❌ Error al leer Firestore:', err);
+  }
+}
+
+cargarEstadisticas();
   } catch (err) {
     console.error('❌ Error al leer Firestore:', err);
   }
