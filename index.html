@@ -4,28 +4,45 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lo Nuestro</title>
-  <!-- Enlazar CSS y scripts necesarios -->
   <link rel="stylesheet" href="css/style.css">
-  <!-- Estilos para mejorar contraste del dashboard -->
+  <!-- Estilos internos para dashboard y hero -->
   <style>
+    /* Hero section background color y texto */
+    .hero {
+      background-color: #004080;
+      color: #fff;
+      padding: 2rem 0;
+      text-align: center;
+    }
+    .hero .logo {
+      max-width: 200px;
+      margin-bottom: 1rem;
+    }
+    .hero h1, .hero p {
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+    }
+
+    /* Dashboard contrast */
     .dashboard-cards {
       display: flex;
       gap: 1rem;
+      justify-content: center;
+      margin-top: 1rem;
     }
     .dashboard-cards .card {
-      background-color: #fafafa;
+      background-color: rgba(255,255,255,0.2);
       padding: 1rem;
       border-radius: 0.5rem;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       flex: 1;
+      max-width: 200px;
       text-align: center;
+      color: #fff;
     }
     .dashboard-value {
       display: block;
       margin-top: 0.5rem;
       font-size: 1.5rem;
       font-weight: bold;
-      color: #333333;
     }
   </style>
 </head>
@@ -49,19 +66,17 @@
     </div>
   </header>
 
-  <!-- SECCIÓN: ¿QUÉ ES LO NUESTRO? -->
+  <!-- Otras secciones permanecen igual -->
   <section id="que-es" class="about">
     <div class="container">
       <h2>¿Qué es Lo Nuestro?</h2>
       <p>Explicación breve del modelo cooperativo donde el cliente eres tú y el dueño también.</p>
       <div class="chart-circle">
-        <!-- Gráfico círculo del capital social -->
         <canvas id="circle-chart"></canvas>
       </div>
     </div>
   </section>
 
-  <!-- SECCIÓN: CÓMO FUNCIONA -->
   <section id="como-funciona" class="how-it-works">
     <div class="container">
       <h2>¿Cómo funciona?</h2>
@@ -73,7 +88,6 @@
     </div>
   </section>
 
-  <!-- SECCIÓN: MANIFIESTO, CÓDICE, NIVELES -->
   <section id="documentos" class="documents">
     <div class="container">
       <h2>Manifiesto, Códice y Niveles</h2>
@@ -86,7 +100,6 @@
     </div>
   </section>
 
-  <!-- SECCIÓN: PLAN FINANCIERO ESTÁNDAR -->
   <section id="plan-financiero" class="financial-plan">
     <div class="container">
       <h2>Plan Financiero Estándar</h2>
@@ -95,7 +108,6 @@
     </div>
   </section>
 
-  <!-- SECCIÓN: TESTIMONIOS -->
   <section id="testimonios" class="testimonials">
     <div class="container">
       <h2>Testimonios</h2>
@@ -105,7 +117,6 @@
     </div>
   </section>
 
-  <!-- SECCIÓN: BLOG / NOTICIAS -->
   <section id="blog" class="blog">
     <div class="container">
       <h2>Blog / Noticias</h2>
@@ -113,7 +124,6 @@
     </div>
   </section>
 
-  <!-- SECCIÓN: ACCESO A LA APP -->
   <section id="app-access" class="app-access">
     <div class="container">
       <h2>Acceso a la App</h2>
@@ -122,7 +132,6 @@
     </div>
   </section>
 
-  <!-- SECCIÓN: CONTACTO -->
   <section id="contacto" class="contact">
     <div class="container">
       <h2>Contacto</h2>
