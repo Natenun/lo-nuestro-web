@@ -3,7 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebas
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
 // Configuración de Firebase
-const firebaseConfig = {
+tconst firebaseConfig = {
   apiKey: "AIzaSyAIChaC8FOsYR0nQyI7LjXcR3FmwRhQSmk",
   authDomain: "lonuestro-71349.firebaseapp.com",
   projectId: "lonuestro-71349",
@@ -17,13 +17,13 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 const db = getFirestore();
 
-// Formatea delta con flecha y valor (opcional %)
+// Formatea delta con valor y opcional porcentaje
 function formatoDelta(valor, esPorcentaje = true) {
   const signo = valor >= 0 ? 'up' : 'down';
-  const flecha = valor >= 0 ? '▲' : '▼';
-  return esPorcentaje
-    ? { signo, texto: `${flecha} ${Math.abs(valor)}%` }
-    : { signo, texto: `${flecha} ${Math.abs(valor)}` };
+  const prefijo = valor >= 0 ? '+' : '-';
+  const abs = Math.abs(valor);
+  const texto = esPorcentaje ? `${prefijo}${abs}%` : `${prefijo}${abs}`;
+  return { signo, texto };
 }
 
 async function cargarEstadisticas() {
@@ -39,58 +39,53 @@ async function cargarEstadisticas() {
     const dAct = snapAct.data();
     const dPrev = snapPrev.exists() ? snapPrev.data() : null;
 
-    // Valores actuales
+    // Actual
     const act = Number(dAct.usuarios_activos) || 0;
     const tot = Number(dAct.usuarios_totales) || act;
     const capAct = Number(dAct.capitalizacion) || 0;
     const rendAct = Number(dAct.rendimientos) || 0;
 
-    // Valores previos
+    // Previos
     const prevAct = dPrev ? Number(dPrev.usuarios_activos) || 0 : 0;
     const prevTot = dPrev ? Number(dPrev.usuarios_totales) || 0 : 0;
     const prevCap = dPrev ? Number(dPrev.capitalizacion) || 0 : 0;
     const prevRend = dPrev ? Number(dPrev.rendimientos) || 0 : 0;
 
-    // Cálculos de porcentaje
-    const pctSoc = prevAct ? Math.round(((act - prevAct) / prevAct) * 100) : 0;
-    const pctTot = prevTot ? Math.round(((tot - prevTot) / prevTot) * 100) : 0;
-    const pctCap = prevCap ? Math.round(((capAct - prevCap) / prevCap) * 100) : 0;
-    const pctRend = prevRend ? Math.round(((rendAct - prevRend) / prevRend) * 100) : 0;
-
-    // Actualizar DOM - valores absolutos
-    document.getElementById('socios-porcentaje').innerText = act;
+    // Actualizar valores
     document.getElementById('socios-totales').innerText = tot;
+    document.getElementById('socios-porcentaje').innerText = act;
     document.getElementById('capital').innerText = `$${capAct.toLocaleString()}`;
     document.getElementById('rendimiento').innerText = `$${rendAct.toLocaleString()}`;
 
-    // Deltas: Socios activos
-    const deltaAct = formatoDelta(pctSoc);
-    const deltaActCount = formatoDelta(act - prevAct, false);
-    const elActDelta = document.getElementById('delta-socios');
-    elActDelta.className = `delta ${deltaAct.signo}`;
-    elActDelta.innerText = `${deltaActCount.texto} (${deltaAct.texto})`;
+    if (dPrev) {
+      // Socios activos delta
+      const deltaActCount = formatoDelta(act - prevAct, false);
+      const deltaActPct = formatoDelta(Math.round(((act - prevAct) / (prevAct || 1)) * 100));
+      const elSoc = document.getElementById('delta-socios');
+      elSoc.className = `delta ${deltaActPct.signo}`;
+      elSoc.innerText = `${deltaActCount.texto} (${deltaActPct.texto})`;
 
-    // Deltas: Socios totales
-    const deltaTotObj = formatoDelta(pctTot);
-    const deltaTotCount = formatoDelta(tot - prevTot, false);
-    const elTotDelta = document.getElementById('delta-totales');
-    elTotDelta.className = `delta ${deltaTotObj.signo}`;
-    elTotDelta.innerText = `${deltaTotCount.texto} (${deltaTotObj.texto})`;
+      // Socios totales delta
+      const deltaTotCount = formatoDelta(tot - prevTot, false);
+      const deltaTotPct = formatoDelta(Math.round(((tot - prevTot) / (prevTot || 1)) * 100));
+      const elTot = document.getElementById('delta-totales');
+      elTot.className = `delta ${deltaTotPct.signo}`;
+      elTot.innerText = `${deltaTotCount.texto} (${deltaTotPct.texto})`;
 
-    // Deltas: Capital total
-    const deltaCapObj = formatoDelta(pctCap);
-    const deltaCapCount = formatoDelta(capAct - prevCap, false);
-    const elCapDelta = document.getElementById('delta-capital');
-    elCapDelta.className = `delta ${deltaCapObj.signo}`;
-    elCapDelta.innerText = `${deltaCapCount.texto} (${deltaCapObj.texto})`;
+      // Capital total delta
+      const deltaCapCount = formatoDelta(capAct - prevCap, false);
+      const deltaCapPct2 = formatoDelta(Math.round(((capAct - prevCap) / (prevCap || 1)) * 100));
+      const elCap = document.getElementById('delta-capital');
+      elCap.className = `delta ${deltaCapPct2.signo}`;
+      elCap.innerText = `${deltaCapCount.texto} (${deltaCapPct2.texto})`;
 
-    // Deltas: Rendimiento
-    const deltaRendObj = formatoDelta(pctRend);
-    const deltaRendCount = formatoDelta(rendAct - prevRend, false);
-    const elRendDelta = document.getElementById('delta-rendimiento');
-    elRendDelta.className = `delta ${deltaRendObj.signo}`;
-    elRendDelta.innerText = `${deltaRendCount.texto} (${deltaRendObj.texto})`;
-
+      // Rendimiento delta
+      const deltaRendCount = formatoDelta(rendAct - prevRend, false);
+      const deltaRendPct2 = formatoDelta(Math.round(((rendAct - prevRend) / (prevRend || 1)) * 100));
+      const elRen = document.getElementById('delta-rendimiento');
+      elRen.className = `delta ${deltaRendPct2.signo}`;
+      elRen.innerText = `${deltaRendCount.texto} (${deltaRendPct2.texto})`;
+    }
   } catch (e) {
     console.error('Error Firebase:', e);
   }
