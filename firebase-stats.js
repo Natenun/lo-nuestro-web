@@ -37,22 +37,19 @@ async function cargarEstadisticas() {
     const act = Number(dAct.usuarios_activos) || 0;
     const tot = Number(dAct.usuarios_totales) || act;
     const capAct = Number(dAct.capitalizacion) || 0;
+    // Valor rendimiento del mes actual y previo
+    const rendAct = Number(dAct.rendimiento) || 0;
+    const rendPrev = dPrev ? Number(dPrev.rendimiento) || 0 : 0;
 
     // Porcentaje socios activos
     const pctSoc = tot ? Math.round(act / tot * 100) : 0;
-
-    // Rendimiento basado en capital
-    let ren = 0;
-    if (dPrev && dPrev.capitalizacion != null) {
-      const capPrev = Number(dPrev.capitalizacion) || 0;
-      ren = capPrev ? Math.round((capAct - capPrev) / capPrev * 100) : 0;
-    }
 
     // Actualizar DOM
     document.getElementById('socios-porcentaje').innerText = `${pctSoc}%`;
     document.getElementById('socios-totales').innerText = tot;
     document.getElementById('capital').innerText = `$${capAct.toLocaleString()}`;
-    document.getElementById('rendimiento').innerText = `${ren}%`;
+    // Mostrar rendimiento en pesos (campo rendimiento)
+    document.getElementById('rendimiento').innerText = `$${rendAct.toLocaleString()}`;
 
     // Si hay prev, calcular deltas
     if (dPrev) {
@@ -74,15 +71,15 @@ async function cargarEstadisticas() {
 
       // Capital delta %
       const capPrev = Number(dPrev.capitalizacion) || 0;
-      const dCapPct = capPrev ? Math.round((capAct - capPrev) / capPrev * 100) : 0;
-      const dCap = formatoDelta(dCapPct);
+      const capPctDelta = capPrev ? Math.round((capAct - capPrev) / capPrev * 100) : 0;
+      const dCap = formatoDelta(capPctDelta);
       const elCap = document.getElementById('delta-capital');
       elCap.className = `delta ${dCap.signo}`;
       elCap.innerText = dCap.texto;
 
-      // Rendimiento delta %
-      const prevRen = dPrev.rendimiento != null ? Number(dPrev.rendimiento) : ren;
-      const dRen = formatoDelta(ren - prevRen);
+      // Rendimiento delta % basado en campo rendimiento
+      const renDeltaPct = Math.round(((rendAct - rendPrev) / (rendPrev || 1)) * 100);
+      const dRen = formatoDelta(renDeltaPct);
       const elRen = document.getElementById('delta-rendimiento');
       elRen.className = `delta ${dRen.signo}`;
       elRen.innerText = dRen.texto;
