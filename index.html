@@ -6,6 +6,28 @@
   <title>Lo Nuestro</title>
   <!-- Enlazar CSS y scripts necesarios -->
   <link rel="stylesheet" href="css/style.css">
+  <!-- Estilos para mejorar contraste del dashboard -->
+  <style>
+    .dashboard-cards {
+      display: flex;
+      gap: 1rem;
+    }
+    .dashboard-cards .card {
+      background-color: #fafafa;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      flex: 1;
+      text-align: center;
+    }
+    .dashboard-value {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #333333;
+    }
+  </style>
 </head>
 <body>
   <!-- SECCIÓN: INICIO -->
@@ -17,11 +39,11 @@
       <div class="dashboard-cards">
         <div class="card">
           <h3>Socios activos</h3>
-          <span id="socios" class="dashboard-value">Cargando...</span>
+          <span id="socios" class="dashboard-value">—</span>
         </div>
         <div class="card">
           <h3>Capital total</h3>
-          <span id="capital" class="dashboard-value">Cargando...</span>
+          <span id="capital" class="dashboard-value">—</span>
         </div>
       </div>
     </div>
