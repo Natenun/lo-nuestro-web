@@ -21,7 +21,8 @@
       margin-bottom: 1rem;
     }
     .hero h1,
-    .hero p {
+    .hero p,
+    .hero .data-period {
       text-shadow: 0 1px 3px rgba(0,0,0,0.7);
     }
 
@@ -31,13 +32,13 @@
       gap: 1rem;
       justify-content: center;
       margin: 1rem 0;
+      flex-wrap: wrap;
     }
     .dashboard-cards .card {
       background-color: rgba(255,255,255,0.2);
       padding: 1rem;
       border-radius: 0.5rem;
-      flex: 1;
-      max-width: 220px;
+      flex: 1 1 200px;
       text-align: center;
       color: #fff;
       position: relative;
@@ -50,8 +51,8 @@
     }
     .delta {
       position: absolute;
-      top: 1rem;
-      right: 1rem;
+      top: 0.8rem;
+      right: 0.8rem;
       font-size: 0.9rem;
       font-weight: bold;
     }
@@ -62,10 +63,9 @@
       color: #f00;
     }
     .data-period {
-      text-align: center;
+      margin-top: 0.5rem;
       color: #fff;
       font-size: 0.9rem;
-      margin-top: 0.5rem;
     }
   </style>
 </head>
@@ -84,6 +84,11 @@
           <span id="delta-socios" class="delta"></span>
         </div>
         <div class="card">
+          <h3>Socios totales</h3>
+          <span id="socios-totales" class="dashboard-value">—</span>
+          <span id="delta-totales" class="delta"></span>
+        </div>
+        <div class="card">
           <h3>Capital total</h3>
           <span id="capital" class="dashboard-value">—</span>
           <span id="delta-capital" class="delta"></span>
@@ -92,11 +97,6 @@
           <h3>Rendimiento</h3>
           <span id="rendimiento" class="dashboard-value">—%</span>
           <span id="delta-rendimiento" class="delta"></span>
-        </div>
-        <div class="card">
-          <h3>Socios totales</h3>
-          <span id="socios-totales" class="dashboard-value">—</span>
-          <span id="delta-totales" class="delta"></span>
         </div>
       </div>
     </div>
