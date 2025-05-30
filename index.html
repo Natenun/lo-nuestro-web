@@ -67,6 +67,13 @@
       color: #fff;
       font-size: 0.9rem;
     }
+    .story-text {
+      flex: 1 1 100%;
+      text-align: center;
+      margin: 2rem 0;
+      color: #fff;
+      font-style: italic;
+    }
   </style>
 </head>
 <body>
@@ -78,25 +85,27 @@
       <p class="subtitle">Fondo colectivo de <span id="capital">—</span>, crecimiento de <span id="delta-capital">—</span> mensual</p>
       <p class="data-period">Datos de mayo 2025</p>
       <div class="dashboard-cards">
-        <!-- Cuadro 1: Miembros en comunidad -->
+        <!-- Primer par de tarjetas -->
         <div class="card">
           <h3>Miembros en comunidad</h3>
           <span id="socios-totales" class="dashboard-value">—</span>
           <span id="delta-totales" class="delta"></span>
         </div>
-        <!-- Cuadro 2: Corazón activo de la comunidad -->
         <div class="card">
           <h3>Corazón activo de la comunidad</h3>
           <span id="socios-porcentaje" class="dashboard-value">—</span>
           <span id="delta-socios" class="delta"></span>
         </div>
-        <!-- Cuadro 3: Fondo colectivo -->
+        <!-- Texto de historia -->
+        <div class="story-text">
+          <p>En Lo Nuestro, cada miembro aporta su granito y juntos hemos construido un fondo donde ningún peso está solo. ¡Únete y crezcamos juntos!</p>
+        </div>
+        <!-- Segundo par de tarjetas -->
         <div class="card">
           <h3>Fondo colectivo</h3>
           <span id="capital" class="dashboard-value">—</span>
           <span id="delta-capital" class="delta"></span>
         </div>
-        <!-- Cuadro 4: Crecimos juntos -->
         <div class="card">
           <h3>Crecimos juntos</h3>
           <span id="rendimiento" class="dashboard-value">—</span>
