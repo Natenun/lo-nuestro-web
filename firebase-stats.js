@@ -23,7 +23,7 @@ async function cargarEstadisticas() {
     const data = docSnap.data();
     document.getElementById("socios").innerText = data.usuarios_activos ?? "—";
     document.getElementById("capital").innerText = "$" + (data.capitalizacion ?? "—");
-    document.getElementById("rendimientos").innerText = (data.metas_cumplidas ?? "—") + " metas";
+    document.getElementById("rendimientos").innerText = (data.rendimientos ?? "—") + " metas";
   } else {
     console.log("No se encontró el documento.");
   }
