@@ -3,7 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebas
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
 // Configuración de Firebase
-tconst firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyAIChaC8FOsYR0nQyI7LjXcR3FmwRhQSmk",
   authDomain: "lonuestro-71349.firebaseapp.com",
   projectId: "lonuestro-71349",
