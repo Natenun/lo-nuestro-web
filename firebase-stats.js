@@ -39,55 +39,60 @@ async function cargarEstadisticas() {
     }
     const dataActual = snapActual.data();
     const dataPrev = snapPrev.exists() ? snapPrev.data() : null;
-    console.log('✅ Datos actuales:', dataActual, 'Datos previos:', dataPrev);
 
-    // Campos requeridos:
-    // usuarios_activos, usuarios_totales, capitalizacion
-    const actives = dataActual.usuarios_activos;
-    const totalSoc = dataActual.usuarios_totales;
-    const capital = dataActual.capitalizacion;
-
-    // Cálculo de rendimiento si no existe campo 'rendimiento'
-    let rendimiento = dataActual.rendimiento;
-    if (rendimiento == null && dataPrev && dataPrev.capitalizacion) {
-      rendimiento = Math.round((capital - dataPrev.capitalizacion) / dataPrev.capitalizacion * 100);
-    }
+    // Leer campos
+    const actives = Number(dataActual.usuarios_activos) || 0;
+    const totalSoc = Number(dataActual.usuarios_totales) || actives;
+    const capitalAct = Number(dataActual.capitalizacion) || 0;
 
     // Porcentaje socios activos
-    const porSocios = Math.round((actives / totalSoc) * 100);
+    const porSocios = totalSoc > 0 ? Math.round((actives / totalSoc) * 100) : 0;
+
+    // Calcular rendimiento basado en capital
+    let rendimiento = 0;
+    if (dataPrev && dataPrev.capitalizacion != null) {
+      const capitalPrev = Number(dataPrev.capitalizacion) || 0;
+      if (capitalPrev > 0) {
+        rendimiento = Math.round(((capitalAct - capitalPrev) / capitalPrev) * 100);
+      }
+    }
 
     // Actualizar el DOM
     document.getElementById('socios-porcentaje').innerText = `${porSocios}%`;
     document.getElementById('socios-totales').innerText = `${totalSoc}`;
-    document.getElementById('capital').innerText = `$${capital.toLocaleString()}`;
+    document.getElementById('capital').innerText = `$${capitalAct.toLocaleString()}`;
     document.getElementById('rendimiento').innerText = `${rendimiento}%`;
 
-    // Mostrar deltas usando datos previos
+    // Mostrar deltas si hay datos previos
     if (dataPrev) {
-      // delta socios activos
-      const prevPor = Math.round((dataPrev.usuarios_activos / dataPrev.usuarios_totales) * 100);
+      // Delta socios activos porcentual
+      const prevAct = Number(dataPrev.usuarios_activos) || 0;
+      const prevTot = Number(dataPrev.usuarios_totales) || prevAct;
+      const prevPor = prevTot > 0 ? Math.round((prevAct / prevTot) * 100) : 0;
       const deltaSoc = formatoDelta(porSocios - prevPor);
       const elDSoc = document.getElementById('delta-socios');
-      elDSoc.classList.add(deltaSoc.signo);
+      elDSoc.className = `delta ${deltaSoc.signo}`;
       elDSoc.innerText = deltaSoc.texto;
 
-      // delta socios totales
-      const deltaTot = formatoDelta(totalSoc - dataPrev.usuarios_totales);
+      // Delta socios totales absolutos (convertir a % varia?)
+      const deltaTotValue = totalSoc - prevTot;
+      const deltaTot = { signo: deltaTotValue >= 0 ? 'up' : 'down', texto: `${deltaTotValue >= 0 ? '▲' : '▼'} ${Math.abs(deltaTotValue)}` };
       const elDTot = document.getElementById('delta-totales');
-      elDTot.classList.add(deltaTot.signo);
+      elDTot.className = `delta ${deltaTot.signo}`;
       elDTot.innerText = deltaTot.texto;
 
-      // delta capital
-      const deltaCap = formatoDelta(Math.round((capital - dataPrev.capitalizacion) / dataPrev.capitalizacion * 100));
+      // Delta capital porcentual
+      const deltaCap = formatoDelta(prevAct>0? Math.round(((capitalAct - (Number(dataPrev.capitalizacion)||0)) / (Number(dataPrev.capitalizacion)||1)) * 100):0);
       const elCap = document.getElementById('delta-capital');
-      elCap.classList.add(deltaCap.signo);
+      elCap.className = `delta ${deltaCap.signo}`;
       elCap.innerText = deltaCap.texto;
 
-      // delta rendimiento
-      if (rendimiento != null && dataPrev.rendimiento != null) {
-        const deltaRen = formatoDelta(rendimiento - dataPrev.rendimiento);
+      // Delta rendimiento
+      if (dataPrev.capitalizacion != null) {
+        const prevRend = dataPrev.capitalizacion != null ? Math.round(((Number(dataPrev.capitalizacion)||0) - (Number(dataPrev.capitalizacion)||0)) / (Number(dataPrev.capitalizacion)||1) * 100) : 0;
+        const deltaRen = formatoDelta(rendimiento - prevRend);
         const elRen = document.getElementById('delta-rendimiento');
-        elRen.classList.add(deltaRen.signo);
+        elRen.className = `delta ${deltaRen.signo}`;
         elRen.innerText = deltaRen.texto;
       }
     }
@@ -96,5 +101,4 @@ async function cargarEstadisticas() {
   }
 }
 
-// Ejecuta la carga al inicio
 cargarEstadisticas();
