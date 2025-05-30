@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Permitir eval en Firebase para evitar CSP bloqueos -->
   <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://www.googleapis.com;">
-  
   <title>Lo Nuestro</title>
   <link rel="stylesheet" href="css/style.css">
   <!-- Estilos internos para dashboard y hero -->
@@ -21,7 +20,8 @@
       max-width: 200px;
       margin-bottom: 1rem;
     }
-    .hero h1, .hero p {
+    .hero h1,
+    .hero p {
       text-shadow: 0 1px 3px rgba(0,0,0,0.7);
     }
 
@@ -30,22 +30,42 @@
       display: flex;
       gap: 1rem;
       justify-content: center;
-      margin-top: 1rem;
+      margin: 1rem 0;
     }
     .dashboard-cards .card {
       background-color: rgba(255,255,255,0.2);
       padding: 1rem;
       border-radius: 0.5rem;
       flex: 1;
-      max-width: 200px;
+      max-width: 220px;
       text-align: center;
       color: #fff;
+      position: relative;
     }
     .dashboard-value {
       display: block;
       margin-top: 0.5rem;
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       font-weight: bold;
+    }
+    .delta {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+    .delta.up {
+      color: #0f0;
+    }
+    .delta.down {
+      color: #f00;
+    }
+    .data-period {
+      text-align: center;
+      color: #fff;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
     }
   </style>
 </head>
@@ -56,24 +76,26 @@
       <img src="img/logo-lo-Nuestro.png" alt="Logo Lo Nuestro" class="logo">
       <h1>Una nueva forma de crecer juntos</h1>
       <p class="subtitle">Conviértete en socio sin invertir un solo peso</p>
+      <p class="data-period">Datos de mayo 2025</p>
       <div class="dashboard-cards">
         <div class="card">
-          <h3>Socios activos</h3>
-          <span id="socios" class="dashboard-value">—</span>
+          <h3>% Socios activos</h3>
+          <span id="socios-porcentaje" class="dashboard-value">—%</span>
+          <span id="delta-socios" class="delta"></span>
         </div>
         <div class="card">
           <h3>Capital total</h3>
           <span id="capital" class="dashboard-value">—</span>
+          <span id="delta-capital" class="delta"></span>
         </div>
         <div class="card">
-          <h3>Metas cumplidas</h3>
-          <span id="rendimientos" class="dashboard-value">—</span>
+          <h3>Rendimiento</h3>
+          <span id="rendimiento" class="dashboard-value">—%</span>
+          <span id="delta-rendimiento" class="delta"></span>
         </div>
       </div>
     </div>
   </header>
-
-  <!-- Otras secciones permanecen igual -->
 
   <!-- Importa el script de estadísticas -->
   <script type="module" src="firebase-stats.js"></script>
