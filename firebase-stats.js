@@ -42,37 +42,40 @@ async function cargarEstadisticas() {
     const act = Number(dAct.usuarios_activos) || 0;
     const tot = Number(dAct.usuarios_totales) || act;
     const capAct = Number(dAct.capitalizacion) || 0;
-    // Valor rendimientos (campo plural) del mes actual y previo
     const rendAct = Number(dAct.rendimientos) || 0;
     const rendPrev = dPrev ? Number(dPrev.rendimientos) || 0 : 0;
 
-    // % Socios activos
-    const pctSoc = tot ? Math.round(act / tot * 100) : 0;
+    // Cálculo porcentual socios activos para delta
+    const pctSoc = tot ? Math.round((act - (dPrev ? Number(dPrev.usuarios_activos) || 0 : 0)) / (dPrev ? Number(dPrev.usuarios_activos) || 1 : act) * 100) : 0;
 
-    // Actualizar DOM
-    document.getElementById('socios-porcentaje').innerText = `${pctSoc}%`;
+    // Actualizar DOM con valor absoluto de activos
     document.getElementById('socios-totales').innerText = tot;
+    document.getElementById('socios-porcentaje').innerText = act;
     document.getElementById('capital').innerText = `$${capAct.toLocaleString()}`;
-    // Mostrar rendimientos en pesos
     document.getElementById('rendimiento').innerText = `$${rendAct.toLocaleString()}`;
 
-    // Si hay prev, calcular deltas
+    // Si hay datos previos, calcular deltas
     if (dPrev) {
-      // Delta % Socios activos
-      const prevAct = Number(dPrev.usuarios_activos) || 0;
-      const prevTot = Number(dPrev.usuarios_totales) || prevAct;
-      const prevPct = prevTot ? Math.round(prevAct / prevTot * 100) : 0;
-      const dSoc = formatoDelta(pctSoc - prevPct);
-      const elSoc = document.getElementById('delta-socios');
-      elSoc.className = `delta ${dSoc.signo}`;
-      elSoc.innerText = dSoc.texto;
-
-      // Delta Socios totales (valor)
-      const deltaTotVal = tot - prevTot;
-      const dTot = { signo: deltaTotVal >= 0 ? 'up' : 'down', texto: `${deltaTotVal >= 0 ? '▲' : '▼'} ${Math.abs(deltaTotVal)}` };
+      // Delta Socios totales
+      const prevTot = Number(dPrev.usuarios_totales) || 0;
+      const dTotVal = tot - prevTot;
+      const dTot = { signo: dTotVal >= 0 ? 'up' : 'down', texto: `${dTotVal >= 0 ? '▲' : '▼'} ${Math.abs(dTotVal)}` };
       const elTot = document.getElementById('delta-totales');
       elTot.className = `delta ${dTot.signo}`;
       elTot.innerText = dTot.texto;
+
+            // Delta Socios activos: cantidad y porcentaje
+      const prevAct = Number(dPrev.usuarios_activos) || 0;
+      const countDelta = act - prevAct;
+      const pctDelta = pctSoc; // ya calculado
+      const dSocSigno = countDelta >= 0 ? 'up' : 'down';
+      const flechaSoc = countDelta >= 0 ? '▲' : '▼';
+      const elSoc = document.getElementById('delta-socios');
+      elSoc.className = `delta ${dSocSigno}`;
+      elSoc.innerText = `${flechaSoc} ${Math.abs(countDelta)} (${pctDelta}%)`;
+      const elSoc = document.getElementById('delta-socios');
+      elSoc.className = `delta ${dSoc.signo}`;
+      elSoc.innerText = dSoc.texto;
 
       // Delta Capital %
       const capPrev = Number(dPrev.capitalizacion) || 0;
