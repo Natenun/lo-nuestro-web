@@ -26,12 +26,10 @@ function formatoDelta(valor) {
 
 async function cargarEstadisticas() {
   console.log('📡 Iniciando carga de estadísticas...');
-  // Documentos de meses
   const meses = ['mayo_2025', 'abril_2025'];
   const refs = meses.map(m => doc(db, 'estadisticas', m));
 
   try {
-    // Cargar ambos docs
     const snaps = await Promise.all(refs.map(r => getDoc(r)));
     const [snapActual, snapPrev] = snaps;
 
@@ -39,39 +37,45 @@ async function cargarEstadisticas() {
       console.warn('⚠️ No existe el documento mayo_2025');
       return;
     }
-    if (!snapPrev.exists()) {
-      console.warn('⚠️ No existe el documento abril_2025');
-    }
-
     const dataActual = snapActual.data();
     const dataPrev = snapPrev.exists() ? snapPrev.data() : null;
     console.log('✅ Datos actuales:', dataActual, 'Datos previos:', dataPrev);
 
-    // Cálculos
-    // 1. % Socios activos (respecto a usuarios_totales)
-    const sociosAct = dataActual.usuarios_activos;
-    const sociosTot = dataActual.usuarios_totales || sociosAct;
-    const porSocios = Math.round((sociosAct / sociosTot) * 100);
-
-    // 2. Capital total
+    // Campos requeridos:
+    // usuarios_activos, usuarios_totales, capitalizacion
+    const actives = dataActual.usuarios_activos;
+    const totalSoc = dataActual.usuarios_totales;
     const capital = dataActual.capitalizacion;
 
-    // 3. Rendimiento (campo existente en el doc)
-    const rendimiento = dataActual.rendimiento ?? 0;
+    // Cálculo de rendimiento si no existe campo 'rendimiento'
+    let rendimiento = dataActual.rendimiento;
+    if (rendimiento == null && dataPrev && dataPrev.capitalizacion) {
+      rendimiento = Math.round((capital - dataPrev.capitalizacion) / dataPrev.capitalizacion * 100);
+    }
+
+    // Porcentaje socios activos
+    const porSocios = Math.round((actives / totalSoc) * 100);
 
     // Actualizar el DOM
     document.getElementById('socios-porcentaje').innerText = `${porSocios}%`;
+    document.getElementById('socios-totales').innerText = `${totalSoc}`;
     document.getElementById('capital').innerText = `$${capital.toLocaleString()}`;
     document.getElementById('rendimiento').innerText = `${rendimiento}%`;
 
-    // Calcular y mostrar deltas si hay datos previos
+    // Mostrar deltas usando datos previos
     if (dataPrev) {
-      // delta socios
-      const prevPorSocios = Math.round((dataPrev.usuarios_activos / (dataPrev.usuarios_totales || dataPrev.usuarios_activos)) * 100);
-      const deltaSoc = formatoDelta(porSocios - prevPorSocios);
-      const elSoc = document.getElementById('delta-socios');
-      elSoc.classList.add(deltaSoc.signo);
-      elSoc.innerText = deltaSoc.texto;
+      // delta socios activos
+      const prevPor = Math.round((dataPrev.usuarios_activos / dataPrev.usuarios_totales) * 100);
+      const deltaSoc = formatoDelta(porSocios - prevPor);
+      const elDSoc = document.getElementById('delta-socios');
+      elDSoc.classList.add(deltaSoc.signo);
+      elDSoc.innerText = deltaSoc.texto;
+
+      // delta socios totales
+      const deltaTot = formatoDelta(totalSoc - dataPrev.usuarios_totales);
+      const elDTot = document.getElementById('delta-totales');
+      elDTot.classList.add(deltaTot.signo);
+      elDTot.innerText = deltaTot.texto;
 
       // delta capital
       const deltaCap = formatoDelta(Math.round((capital - dataPrev.capitalizacion) / dataPrev.capitalizacion * 100));
@@ -80,7 +84,7 @@ async function cargarEstadisticas() {
       elCap.innerText = deltaCap.texto;
 
       // delta rendimiento
-      if (dataPrev.rendimiento != null) {
+      if (rendimiento != null && dataPrev.rendimiento != null) {
         const deltaRen = formatoDelta(rendimiento - dataPrev.rendimiento);
         const elRen = document.getElementById('delta-rendimiento');
         elRen.classList.add(deltaRen.signo);
