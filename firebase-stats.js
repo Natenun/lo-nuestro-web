@@ -14,10 +14,10 @@ const firebaseConfig = {
 };
 
 // Inicializa Firebase y Firestore
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+initializeApp(firebaseConfig);
+const db = getFirestore();
 
-// Helper para formatear deltas
+// Formatea delta con flecha y porcentaje
 function formatoDelta(valor) {
   const signo = valor >= 0 ? 'up' : 'down';
   const flecha = valor >= 0 ? '▲' : '▼';
@@ -25,85 +25,70 @@ function formatoDelta(valor) {
 }
 
 async function cargarEstadisticas() {
-  console.log('📡 Iniciando carga de estadísticas...');
-  const meses = ['mayo_2025', 'abril_2025'];
-  const refs = meses.map(m => doc(db, 'estadisticas', m));
-
   try {
-    const snaps = await Promise.all(refs.map(r => getDoc(r)));
-    const [snapActual, snapPrev] = snaps;
+    const meses = ['mayo_2025', 'abril_2025'];
+    const snaps = await Promise.all(meses.map(m => getDoc(doc(db, 'estadisticas', m))));
+    const [snapAct, snapPrev] = snaps;
+    if (!snapAct.exists()) return console.warn('Documento mayo_2025 no existe');
+    const dAct = snapAct.data();
+    const dPrev = snapPrev.exists() ? snapPrev.data() : null;
 
-    if (!snapActual.exists()) {
-      console.warn('⚠️ No existe el documento mayo_2025');
-      return;
-    }
-    const dataActual = snapActual.data();
-    const dataPrev = snapPrev.exists() ? snapPrev.data() : null;
-
-    // Leer campos
-    const actives = Number(dataActual.usuarios_activos) || 0;
-    const totalSoc = Number(dataActual.usuarios_totales) || actives;
-    const capitalAct = Number(dataActual.capitalizacion) || 0;
+    // Valores actuales
+    const act = Number(dAct.usuarios_activos) || 0;
+    const tot = Number(dAct.usuarios_totales) || act;
+    const capAct = Number(dAct.capitalizacion) || 0;
 
     // Porcentaje socios activos
-    const porSocios = totalSoc > 0 ? Math.round((actives / totalSoc) * 100) : 0;
+    const pctSoc = tot ? Math.round(act / tot * 100) : 0;
 
-    // Calcular rendimiento basado en capital
-    let rendimiento = 0;
-    if (dataPrev && dataPrev.capitalizacion != null) {
-      const capitalPrev = Number(dataPrev.capitalizacion) || 0;
-      if (capitalPrev > 0) {
-        rendimiento = Math.round(((capitalAct - capitalPrev) / capitalPrev) * 100);
-      }
+    // Rendimiento basado en capital
+    let ren = 0;
+    if (dPrev && dPrev.capitalizacion != null) {
+      const capPrev = Number(dPrev.capitalizacion) || 0;
+      ren = capPrev ? Math.round((capAct - capPrev) / capPrev * 100) : 0;
     }
 
-    // Actualizar el DOM
-    document.getElementById('socios-porcentaje').innerText = `${porSocios}%`;
-    document.getElementById('socios-totales').innerText = `${totalSoc}`;
-    document.getElementById('capital').innerText = `$${capitalAct.toLocaleString()}`;
-    document.getElementById('rendimiento').innerText = `${rendimiento}%`;
+    // Actualizar DOM
+    document.getElementById('socios-porcentaje').innerText = `${pctSoc}%`;
+    document.getElementById('socios-totales').innerText = tot;
+    document.getElementById('capital').innerText = `$${capAct.toLocaleString()}`;
+    document.getElementById('rendimiento').innerText = `${ren}%`;
 
-    // Mostrar deltas si hay datos previos
-    if (dataPrev) {
-      // Delta socios activos porcentual
-      const prevAct = Number(dataPrev.usuarios_activos) || 0;
-      const prevTot = Number(dataPrev.usuarios_totales) || prevAct;
-      const prevPor = prevTot > 0 ? Math.round((prevAct / prevTot) * 100) : 0;
-      const deltaSoc = formatoDelta(porSocios - prevPor);
-      const elDSoc = document.getElementById('delta-socios');
-      elDSoc.className = `delta ${deltaSoc.signo}`;
-      elDSoc.innerText = deltaSoc.texto;
+    // Si hay prev, calcular deltas
+    if (dPrev) {
+      // Socios activos delta
+      const prevSoc = Number(dPrev.usuarios_activos) || 0;
+      const prevTotSoc = Number(dPrev.usuarios_totales) || prevSoc;
+      const prevPct = prevTotSoc ? Math.round(prevSoc / prevTotSoc * 100) : 0;
+      const dSoc = formatoDelta(pctSoc - prevPct);
+      const elSoc = document.getElementById('delta-socios');
+      elSoc.className = `delta ${dSoc.signo}`;
+      elSoc.innerText = dSoc.texto;
 
-      // Delta socios totales absolutos (convertir a % varia?)
-      const deltaTotValue = totalSoc - prevTot;
-      const deltaTot = { signo: deltaTotValue >= 0 ? 'up' : 'down', texto: `${deltaTotValue >= 0 ? '▲' : '▼'} ${Math.abs(deltaTotValue)}` };
-      const elDTot = document.getElementById('delta-totales');
-      elDTot.className = `delta ${deltaTot.signo}`;
-      elDTot.innerText = deltaTot.texto;
+      // Socios totales delta
+      const dTotVal = tot - prevTotSoc;
+      const dTot = { signo: dTotVal >= 0 ? 'up' : 'down', texto: `${dTotVal >= 0 ? '▲' : '▼'} ${Math.abs(dTotVal)}` };
+      const elTot = document.getElementById('delta-totales');
+      elTot.className = `delta ${dTot.signo}`;
+      elTot.innerText = dTot.texto;
 
-      // Delta capital porcentual
-      const deltaCap = formatoDelta(prevAct>0? Math.round(((capitalAct - (Number(dataPrev.capitalizacion)||0)) / (Number(dataPrev.capitalizacion)||1)) * 100):0);
+      // Capital delta %
+      const capPrev = Number(dPrev.capitalizacion) || 0;
+      const dCapPct = capPrev ? Math.round((capAct - capPrev) / capPrev * 100) : 0;
+      const dCap = formatoDelta(dCapPct);
       const elCap = document.getElementById('delta-capital');
-      elCap.className = `delta ${deltaCap.signo}`;
-      elCap.innerText = deltaCap.texto;
+      elCap.className = `delta ${dCap.signo}`;
+      elCap.innerText = dCap.texto;
 
-            // Delta rendimiento usando campo rendimiento del mes anterior si existe
-      if (dataPrev.rendimiento != null) {
-        const prevRend = Number(dataPrev.rendimiento) || 0;
-        const deltaRen = formatoDelta(rendimiento - prevRend);
-        const elRen = document.getElementById('delta-rendimiento');
-        elRen.className = `delta ${deltaRen.signo}`;
-        elRen.innerText = deltaRen.texto;
-      }
+      // Rendimiento delta %
+      const prevRen = dPrev.rendimiento != null ? Number(dPrev.rendimiento) : ren;
+      const dRen = formatoDelta(ren - prevRen);
+      const elRen = document.getElementById('delta-rendimiento');
+      elRen.className = `delta ${dRen.signo}`;
+      elRen.innerText = dRen.texto;
     }
-  } catch (err) {
-    console.error('❌ Error al leer Firestore:', err);
-  }
-}
-
-cargarEstadisticas();
-  } catch (err) {
-    console.error('❌ Error al leer Firestore:', err);
+  } catch (e) {
+    console.error('Error Firebase:', e);
   }
 }
 
