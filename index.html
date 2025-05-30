@@ -1,76 +1,45 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lo Nuestro</title>
-  <link rel="stylesheet" href="css/style.css">
-  <!-- Estilos internos para dashboard y hero -->
-  <style>
-    /* Hero section background color y texto */
-    .hero {
-      background-color: #004080;
-      color: #fff;
-      padding: 2rem 0;
-      text-align: center;
-    }
-    .hero .logo {
-      max-width: 200px;
-      margin-bottom: 1rem;
-    }
-    .hero h1, .hero p {
-      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
-    }
-
-    /* Dashboard contrast */
-    .dashboard-cards {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin-top: 1rem;
-    }
-    .dashboard-cards .card {
-      background-color: rgba(255,255,255,0.2);
-      padding: 1rem;
-      border-radius: 0.5rem;
-      flex: 1;
-      max-width: 200px;
-      text-align: center;
-      color: #fff;
-    }
-    .dashboard-value {
-      display: block;
-      margin-top: 0.5rem;
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lo Nuestro</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- SECCIÓN: INICIO -->
-  <header id="inicio" class="hero">
-    <div class="container">
-      <img src="img/logo-lo-Nuestro.png" alt="Logo Lo Nuestro" class="logo">
-      <h1>Una nueva forma de crecer juntos</h1>
-      <p class="subtitle">Conviértete en socio sin invertir un solo peso</p>
-      <div class="dashboard-cards">
-        <div class="card">
-          <h3>Socios activos</h3>
-          <span id="socios" class="dashboard-value">—</span>
+    <header>
+        <h1>Lo Nuestro</h1>
+        <p>Una nueva forma de crecer juntos</p>
+    </header>
+
+    <section id="dashboard">
+        <h2>Tablero de Información</h2>
+        <div class="dashboard-cards">
+            <div class="card"><h3>Socios activos</h3><p id="socios">---</p></div>
+            <div class="card"><h3>Capital total</h3><p id="capital">---</p></div>
+            <div class="card"><h3>Metas cumplidas</h3><p id="rendimientos">---</p></div>
         </div>
-        <div class="card">
-          <h3>Capital total</h3>
-          <span id="capital" class="dashboard-value">—</span>
-        </div>
-      </div>
-    </div>
-  </header>
+    </section>
 
-  <!-- Otras secciones permanecen igual -->
-  <!-- ... -->
+    <section id="que-es">
+        <h2>¿Qué es Lo Nuestro?</h2>
+        <p>Una cooperativa donde tus compras se convierten en capital, sin invertir un solo peso.</p>
+    </section>
 
-  <!-- Importa el script de estadísticas -->
-  <script type="module" src="/js/firebase-stats.js"></script>
+    <section id="como-funciona">
+        <h2>¿Cómo funciona?</h2>
+        <ol>
+            <li>Consume en negocios afiliados</li>
+            <li>Genera capital cooperativo</li>
+            <li>Recibe rendimientos y construye tu patrimonio</li>
+        </ol>
+    </section>
 
+    <footer>
+        <p>© 2025 Lo Nuestro. Todos los derechos reservados.</p>
+    </footer>
+
+    <script type="module" src="firebase-stats.js"></script>
 </body>
 </html>
