@@ -7,76 +7,88 @@
   <title>Lo Nuestro</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
+    /* Hero background and text styling */
     .hero {
       background-color: #004080;
       color: #fff;
       padding: 2rem 0;
       text-align: center;
     }
-    .hero .logo { max-width: 200px; margin-bottom: 1rem; }
-    .hero h1, .hero p { text-shadow: 0 1px 3px rgba(0,0,0,0.7); }
-    .story-line { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 1rem; margin: 2rem 0; }
-    .story-line .text {
-      font-size: 1.2rem;
-      max-width: 400px;
-      text-align: left;
-      font-style: italic;
+    .hero .logo {
+      max-width: 200px;
+      margin-bottom: 1rem;
     }
-    .story-line .card {
+    .hero h1, .hero p, .hero .data-period {
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+    }
+    /* Dashboard card styling */
+    .dashboard-cards {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+    .dashboard-cards .card {
       background-color: rgba(255,255,255,0.2);
       padding: 1rem;
       border-radius: 0.5rem;
-      flex: 0 1 200px;
+      flex: 1 1 200px;
       text-align: center;
       position: relative;
       color: #fff;
     }
-    .dashboard-value { display: block; margin-top: 0.5rem; font-size: 1.8rem; font-weight: bold; }
-    .delta { position: absolute; top: 0.8rem; right: 0.8rem; font-size: 0.9rem; font-weight: bold; }
+    .dashboard-value {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    .delta {
+      position: absolute;
+      top: 0.8rem;
+      right: 0.8rem;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
     .delta.up { color: #0f0; }
     .delta.down { color: #f00; }
+    .data-period {
+      margin-top: 0.5rem;
+      color: #fff;
+      font-size: 0.9rem;
+    }
   </style>
 </head>
 <body>
+  <!-- SECCIÓN: INICIO -->
   <header id="inicio" class="hero">
     <div class="container">
       <img src="img/logo-lo-Nuestro.png" alt="Lo Nuestro Logo" class="logo">
-      <!-- Línea de storytelling con flujo: texto + tarjeta -->
-      <div class="story-line">
-        <div class="text">Ya somos <strong><span id="socios-totales">—</span> Miembros en comunidad</strong>, ¡y cada mes somos más!</div>
+      <h1>Lo Nuestro: Creciendo en Comunidad</h1>
+      <p class="data-period">Datos de mayo 2025</p>
+      <div class="dashboard-cards">
         <div class="card">
           <h3>Miembros en comunidad</h3>
           <span id="socios-totales" class="dashboard-value">—</span>
           <span id="delta-totales" class="delta"></span>
         </div>
-      </div>
-      <!-- Segunda línea de storytelling con tarjeta + texto -->
-      <div class="story-line">
-        <div class="card">
-          <h3>Fondo colectivo</h3>
-          <span id="capital" class="dashboard-value">—</span>
-          <span id="delta-capital" class="delta"></span>
-        </div>
-        <div class="text">Nuestro Fondo colectivo creció <strong><span id="delta-capital">—</span> este mes</strong>, transformando cada aporte en oportunidad.</div>
-      </div>
-      <!-- Tercera línea: activos y rendimiento -->
-      <div class="story-line">
-        <div class="text">El corazón activo de la comunidad son <strong><span id="socios-porcentaje">—</span></strong> personas participando.</div>
         <div class="card">
           <h3>Corazón activo</h3>
           <span id="socios-porcentaje" class="dashboard-value">—</span>
           <span id="delta-socios" class="delta"></span>
         </div>
-      </div>
-      <div class="story-line">
+        <div class="card">
+          <h3>Fondo colectivo</h3>
+          <span id="capital" class="dashboard-value">—</span>
+          <span id="delta-capital" class="delta"></span>
+        </div>
         <div class="card">
           <h3>Crecimos juntos</h3>
           <span id="rendimiento" class="dashboard-value">—</span>
           <span id="delta-rendimiento" class="delta"></span>
         </div>
-        <div class="text">Este impulso generó un rendimiento de <strong>$<span id="rendimiento">—</span></strong>, reflejo de nuestro esfuerzo compartido.</div>
       </div>
-      <p>Datos de mayo 2025</p>
     </div>
   </header>
   <script type="module" src="firebase-stats.js"></script>
