@@ -58,6 +58,36 @@
       color: #fff;
       font-size: 0.9rem;
     }
+    /* App & Social section */
+    .app-social {
+      background-color: #f8f8f8;
+      padding: 2rem 0;
+      text-align: center;
+    }
+    .app-social h2 {
+      margin-bottom: 1rem;
+      color: #333;
+    }
+    .app-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .app-buttons a img {
+      width: 150px;
+      height: auto;
+    }
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    .social-links a img {
+      width: 40px;
+      height: auto;
+    }
   </style>
 </head>
 <body>
@@ -91,6 +121,34 @@
       </div>
     </div>
   </header>
+
+  <!-- SECCIÓN: APP Y REDES SOCIALES -->
+  <section class="app-social">
+    <div class="container">
+      <h2>Descarga nuestra App</h2>
+      <div class="app-buttons">
+        <a href="https://apps.apple.com/app/idTU_APP_ID" target="_blank" rel="noopener">
+          <img src="img/appstore-badge.png" alt="Descarga en App Store">
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=TU_APP_PACKAGE" target="_blank" rel="noopener">
+          <img src="img/playstore-badge.png" alt="Descarga en Google Play">
+        </a>
+      </div>
+      <h2>Síguenos en redes sociales</h2>
+      <div class="social-links">
+        <a href="https://twitter.com/TU_USUARIO" target="_blank" rel="noopener">
+          <img src="img/x-icon.png" alt="Síguenos en X">
+        </a>
+        <a href="https://www.instagram.com/TU_USUARIO" target="_blank" rel="noopener">
+          <img src="img/instagram-icon.png" alt="Síguenos en Instagram">
+        </a>
+        <a href="https://www.facebook.com/TU_USUARIO" target="_blank" rel="noopener">
+          <img src="img/facebook-icon.png" alt="Síguenos en Facebook">
+        </a>
+      </div>
+    </div>
+  </section>
+
   <script type="module" src="firebase-stats.js"></script>
 </body>
 </html>
