@@ -7,96 +7,139 @@
   <title>Lo Nuestro</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
-    /* Hero background and text styling */
+    /* Reset y base */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Arial', sans-serif; line-height: 1.6; 
+           background-color: #f4f4f4; color: #333; }
+    a { text-decoration: none; color: inherit; }
+    .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+
+    /* Hero similar a defensorxs.com */
     .hero {
-      background-color: #004080;
+      background: linear-gradient(135deg, #0a3d62 0%, #1e3799 100%);
       color: #fff;
-      padding: 2rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 80vh;
       text-align: center;
     }
-    .hero .logo {
-      max-width: 200px;
-      margin-bottom: 1rem;
+    .hero .logo { max-width: 180px; margin-bottom: 1rem; }
+    .hero h1 { font-size: 3rem; margin-bottom: 1rem; }
+    .hero p.subtitle { font-size: 1.2rem; opacity: 0.9; }
+
+    /* Dashboard section */
+    .dashboard-section {
+      background-color: #fff;
+      padding: 3rem 0;
     }
-    .hero h1, .hero p, .hero .data-period {
-      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+    .dashboard-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      color: #1e3799;
     }
-    /* Dashboard card styling */
     .dashboard-cards {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin: 1rem 0;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.5rem;
     }
     .dashboard-cards .card {
-      background-color: rgba(255,255,255,0.2);
-      padding: 1rem;
-      border-radius: 0.5rem;
-      flex: 1 1 200px;
-      text-align: center;
-      position: relative;
+      background: #1e3799;
+      border-radius: 8px;
+      padding: 1.5rem;
       color: #fff;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+    .dashboard-cards .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(30,55,153,0.2);
+    }
+    .dashboard-cards .card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
     }
     .dashboard-value {
-      display: block;
-      margin-top: 0.5rem;
-      font-size: 1.8rem;
+      font-size: 2.5rem;
       font-weight: bold;
+      margin-bottom: 0.5rem;
     }
     .delta {
       position: absolute;
-      top: 0.8rem;
-      right: 0.8rem;
-      font-size: 0.9rem;
+      top: 1rem;
+      right: 1rem;
+      font-size: 1rem;
       font-weight: bold;
     }
-    .delta.up { color: #0f0; }
-    .delta.down { color: #f00; }
-    .data-period {
-      margin-top: 0.5rem;
-      color: #fff;
-      font-size: 0.9rem;
-    }
-    /* App & Social section */
+    .delta.up { color: #2ecc71; }
+    .delta.down { color: #e74c3c; }
+
+    /* App & Social Section similar estilo */
     .app-social {
-      background-color: #f8f8f8;
-      padding: 2rem 0;
+      background-color: #1e3799;
+      color: #fff;
+      padding: 3rem 0;
       text-align: center;
     }
     .app-social h2 {
-      margin-bottom: 1rem;
-      color: #333;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
     }
     .app-buttons {
       display: flex;
-      gap: 1rem;
       justify-content: center;
-      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
     }
     .app-buttons a img {
-      width: 150px;
+      width: 160px;
       height: auto;
+      filter: brightness(1.1);
+      transition: filter 0.3s ease;
+    }
+    .app-buttons a img:hover {
+      filter: brightness(0.9);
     }
     .social-links {
       display: flex;
-      gap: 1rem;
       justify-content: center;
-      margin-top: 1rem;
+      gap: 1rem;
     }
     .social-links a img {
       width: 40px;
       height: auto;
+      filter: grayscale(100%) brightness(1.2);
+      transition: filter 0.3s ease;
+    }
+    .social-links a img:hover {
+      filter: none;
+    }
+
+    /* Footer simple */
+    footer {
+      background: #f4f4f4;
+      color: #333;
+      text-align: center;
+      padding: 1rem 0;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
-  <!-- SECCIÓN: INICIO -->
-  <header id="inicio" class="hero">
+  <!-- Hero -->
+  <section class="hero">
+    <img src="img/logo-lo-Nuestro.png" alt="Lo Nuestro Logo" class="logo">
+    <h1>Creciendo juntos, transformando comunidades</h1>
+    <p class="subtitle">Únete a Lo Nuestro y sé parte del cambio: inclusión financiera colaborativa.</p>
+  </section>
+
+  <!-- Dashboard Section -->
+  <section class="dashboard-section">
     <div class="container">
-      <img src="img/logo-lo-Nuestro.png" alt="Lo Nuestro Logo" class="logo">
-      <h1>Lo Nuestro: Creciendo en Comunidad</h1>
-      <p class="data-period">Datos de mayo 2025</p>
+      <h2 class="dashboard-title">Nuestra Evolución</h2>
       <div class="dashboard-cards">
         <div class="card">
           <h3>Miembros en comunidad</h3>
@@ -120,9 +163,9 @@
         </div>
       </div>
     </div>
-  </header>
+  </section>
 
-  <!-- SECCIÓN: APP Y REDES SOCIALES -->
+  <!-- App & Social Section -->
   <section class="app-social">
     <div class="container">
       <h2>Descarga nuestra App</h2>
@@ -130,24 +173,23 @@
         <a href="https://apps.apple.com/app/id6738976783" target="_blank" rel="noopener">
           <img src="img/appstore-badge.png" alt="Descarga en App Store">
         </a>
-        <a href="https://play.google.com/store/apps/details?id=com.lonuestroapp.app" target="_blank" rel="noopener">
+        <a href="https://play.google.com/store/apps/details?id=TU_APP_PACKAGE" target="_blank" rel="noopener">
           <img src="img/playstore-badge.png" alt="Descarga en Google Play">
         </a>
       </div>
       <h2>Síguenos en redes sociales</h2>
       <div class="social-links">
-        <!--
-        <a href="https://twitter.com/TU_USUARIO" target="_blank" rel="noopener">
-          <img src="img/x-icon2.png" alt="Síguenos en X">
+        <!-- Comentado temporal X -->
+        <!-- <a href="https://twitter.com/TU_USUARIO" target="_blank" rel="noopener">
+          <img src="img/x-icon.png" alt="Síguenos en X">
+        </a> -->
+        <a href="https://www.instagram.com/lonuestroapp/" target="_blank" rel="noopener">
+          <img src="img/instagram-icon.png" alt="Síguenos en Instagram">
         </a>
         <a href="https://www.facebook.com/TU_USUARIO" target="_blank" rel="noopener">
           <img src="img/facebook-icon.png" alt="Síguenos en Facebook">
         </a>
-        -->
-        <a href="https://www.instagram.com/lonuestroapp/" target="_blank" rel="noopener">
-          <img src="img/instagram-icon.png" alt="Síguenos en Instagram">
-        </a>        
-        <a href="https://www.tiktok.com/@natenun" target="_blank" rel="noopener">
+        <a href="https://www.tiktok.com/@TU_USUARIO" target="_blank" rel="noopener">
           <img src="img/tiktok-icon.png" alt="Síguenos en TikTok">
         </a>
       </div>
@@ -155,5 +197,8 @@
   </section>
 
   <script type="module" src="firebase-stats.js"></script>
+  <footer>
+    © 2025 Lo Nuestro. Todos los derechos reservados.
+  </footer>
 </body>
 </html>
