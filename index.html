@@ -26,7 +26,7 @@
       padding: 1rem;
     }
     .hero .logo {
-      max-width: 100px;
+      max-width: 150px;
       margin-bottom: 1rem;
     }
     .hero h1 {
@@ -229,11 +229,13 @@
       const lines = [
         "No solo somos tiendas ni una app.",
         "Somos nuestra propia comunidad económica.",
-        "🔸 Nos pertenece a quienes la usamos.",
-        "🔸 Cada compra que hacemos fortalece nuestro capital.",
-        "🔸 Cada decisión la tomamos entre todos.",
-        "No solo consumimos. Nos convertimos en dueños.",
-        "Creamos una economía que es realmente nuestra."
+        "Nos pertenece a quienes la usamos.",
+        "Cada compra fortalece nuestro capital.",
+        "Cada decisión la tomamos entre todos.",
+        "No solo consumimos."
+        "Nos convertimos en dueños.",
+        "Creamos una economía" 
+        "que es realmente nuestra."
       ];
       let idx = 0;
       const el = document.getElementById("rotating-text");
@@ -244,7 +246,7 @@
       setInterval(() => {
         el.innerText = lines[idx];
         idx = (idx + 1) % lines.length;
-      }, 2500); // Cambia cada 2.5 segundos (ajusta si quieres más rápido o lento)
+      }, 3000); // Cambia cada 3 segundos (ajusta si quieres más rápido o lento)
     })();
   </script>
 </body>
