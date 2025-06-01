@@ -21,18 +21,13 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 30vh;            /* Ajustado a la mitad de alto */
+      height: 30vh;
       text-align: center;
       padding: 1rem;
     }
     .hero .logo {
       max-width: 150px;
       margin-bottom: 1rem;
-    }
-    .hero h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
     }
     .hero p#rotating-text {
       font-size: 1.5rem;
@@ -41,11 +36,6 @@
       font-style: italic;
       height: 2rem;           /* altura fija para que no salte layout */
       overflow: hidden;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
-    }
-    .hero .data-period {
-      font-size: 0.9rem;
-      margin-top: 0.5rem;
       text-shadow: 0 1px 3px rgba(0,0,0,0.7);
     }
 
@@ -57,8 +47,14 @@
     .dashboard-title {
       text-align: center;
       font-size: 2rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 0.5rem;
       color: #1e3799;
+    }
+    .data-period {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 1.5rem;
     }
     .dashboard-cards {
       display: flex;
@@ -98,6 +94,28 @@
     }
     .delta.up { color: #2ecc71; }
     .delta.down { color: #e74c3c; }
+
+    /* Carousel de logos */
+    .logo-carousel {
+      overflow: hidden;
+      background-color: #fff;
+      padding: 1rem 0;
+      margin-top: 2rem;
+    }
+    .logo-track {
+      display: flex;
+      width: calc(300px * 30 * 2); /* 30 logos duplicados */
+      animation: scroll 20s linear infinite;
+    }
+    .logo-track img {
+      width: 150px;
+      margin: 0 1rem;
+      flex-shrink: 0;
+    }
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(calc(-300px * 30)); }
+    }
 
     /* App & Social */
     .app-social {
@@ -156,7 +174,6 @@
   <!-- Hero con texto rotativo -->
   <section class="hero">
     <img src="img/logo-lo-Nuestro.png" alt="Lo Nuestro Logo" class="logo">
-    <!-- Aquí va el P que rotará línea por línea -->
     <p id="rotating-text">Cargando…</p>
   </section>
 
@@ -164,7 +181,7 @@
   <section class="dashboard-section">
     <div class="container">
       <h2 class="dashboard-title">Nuestra Evolución</h2>
-      <p class="data-period" style="text-align:center; margin-bottom:1rem; font-size:0.9rem; color:#555;">Datos de mayo 2025</p>
+      <p class="data-period">Datos de mayo 2025</p>
       <div class="dashboard-cards">
         <div class="card">
           <h3>Miembros en comunidad</h3>
@@ -187,6 +204,24 @@
           <span id="delta-rendimiento" class="delta"></span>
         </div>
       </div>
+
+      <!-- Carousel de logos -->
+      <div class="logo-carousel">
+        <div class="logo-track">
+          <!-- Lista de 30 logos, duplicados para bucle continuo -->
+          <!-- Ejemplo de tres, repite hasta 30 distintos y los mismos nuevamente -->
+          <img src="https://i.postimg.cc/d1HFV7YJ/telcel.png" alt="Logo 1">
+          <img src="https://i.postimg.cc/d1HFV7YJ/telcel.png" alt="Logo 2">
+          <img src="https://i.postimg.cc/d1HFV7YJ/telcel.png" alt="Logo 3">
+          <!-- ... añade hasta 30 imágenes únicas ... -->
+          <!-- Ahora vuelve a incluir las mismas para loop -->
+          <img src="https://i.postimg.cc/d1HFV7YJ/telcel.png" alt="Logo 1">
+          <img src="https://i.postimg.cc/d1HFV7YJ/telcel.png" alt="Logo 2">
+          <img src="https://i.postimg.cc/d1HFV7YJ/telcel.png" alt="Logo 3">
+          <!-- ... repite hasta totalizar 60 entradas ... -->
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -233,7 +268,7 @@
         "Cada decisión la tomamos entre todos.",
         "No solo consumimos.",
         "Nos convertimos en dueños.",
-        "Creamos una economía", 
+        "Creamos una economía",
         "que es realmente nuestra."
       ];
       let idx = 0;
@@ -245,7 +280,7 @@
       setInterval(() => {
         el.innerText = lines[idx];
         idx = (idx + 1) % lines.length;
-      }, 3000); // Cambia cada 3 segundos (ajusta si quieres más rápido o lento)
+      }, 3000);
     })();
   </script>
 </body>
