@@ -218,6 +218,28 @@
       padding: 1rem 0;
       font-size: 0.9rem;
     }
+    /* Media queries para móvil */
+    @media (max-width: 600px) {
+      .hero {
+        height: auto;
+        padding: 2rem 1rem;
+      }
+      .hero h1 {
+        font-size: 1.5rem;
+      }
+      .hero p#rotating-text {
+        font-size: 1.2rem;
+        height: auto;
+        overflow: visible;
+      }
+      .dashboard-cards {
+        flex-direction: column;
+        align-items: center;
+      }
+      .dashboard-cards .card {
+        width: 90%;
+      }
+    }
   </style>
 </head>
 <body>
