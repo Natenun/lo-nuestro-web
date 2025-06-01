@@ -18,7 +18,17 @@
     header .logo-container img { max-width: 120px; }
 
     /* Hero con fondo blanco y mitad de altura */
-    .hero { background-color: #fff; color: #333; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 30vh; text-align: center; padding: 1rem; }
+    .hero {
+      background: linear-gradient(135deg, #0a3d62 0%, #1e3799 100%);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 40vh; /* Reducido a la mitad de alto */
+      text-align: center;
+      padding: 1rem;
+    }
     .hero p { font-size: 0.9rem; max-width: 600px; margin-bottom: 0.8rem; color: #333; }
     .hero p:first-of-type { font-weight: bold; font-size: 1rem; }
 
@@ -35,7 +45,15 @@
     .delta.down { color: #e74c3c; }
 
     /* App & Social Section */
-    .app-social { background-color: #1e3799; color: #fff; padding: 2rem 0; text-align: center; }
+    .app-social {
+      background-color: #fff; /* Cambio a blanco */
+      color: #333;
+      padding: 2rem 0;
+      text-align: center;
+    }
+    .app-social h2 {
+      color: #1e3799;
+    }
     .app-social h2 { font-size: 1.8rem; margin-bottom: 1rem; }
     .app-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; }
     .app-buttons a img { width: 140px; height: auto; filter: brightness(1.1); transition: filter 0.3s ease; }
