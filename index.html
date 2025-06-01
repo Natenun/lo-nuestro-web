@@ -107,13 +107,14 @@
       margin-bottom: 0.5rem;
     }
     .delta {
-      position: absolute;
-      top: 1rem;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 1rem;
-      font-weight: bold;
-    }
+          position: absolute;
+          top: 1rem;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 1rem;
+          font-weight: bold;
+          white-space: nowrap; /* Evita salto en múltiples líneas */
+        }
     .delta.up {
       color: #2ecc71;
     }
