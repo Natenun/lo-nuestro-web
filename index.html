@@ -3,15 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://www.googleapis.com;">
+  <meta http-equiv="Content-Security-Policy"
+        content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://www.googleapis.com;">
   <title>Lo Nuestro</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
     /* Reset y base */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; color: #333; }
-    a { text-decoration: none; color: inherit; }
-    .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
     /* Hero con fondo azul y altura reducida */
     .hero {
@@ -21,13 +37,18 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 30vh;
+      height: 30vh;            /* Ajustado a la mitad de alto */
       text-align: center;
       padding: 1rem;
     }
     .hero .logo {
       max-width: 150px;
       margin-bottom: 1rem;
+    }
+    .hero h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
     }
     .hero p#rotating-text {
       font-size: 1.5rem;
@@ -92,8 +113,12 @@
       font-size: 1rem;
       font-weight: bold;
     }
-    .delta.up { color: #2ecc71; }
-    .delta.down { color: #e74c3c; }
+    .delta.up {
+      color: #2ecc71;
+    }
+    .delta.down {
+      color: #e74c3c;
+    }
 
     /* Carousel de logos: dos filas, animaciones opuestas y más lento */
     .logo-carousel {
@@ -114,20 +139,32 @@
       animation-timing-function: linear;
       animation-iteration-count: infinite;
     }
-    .logo-row.row1 { animation-name: scroll-left; }
-    .logo-row.row2 { animation-name: scroll-right; }
+    .logo-row.row1 {
+      animation-name: scroll-left;
+    }
+    .logo-row.row2 {
+      animation-name: scroll-right;
+    }
     .logo-row img {
       width: 180px;
       margin: 0 1rem;
       flex-shrink: 0;
     }
     @keyframes scroll-left {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(calc(-200px * 30)); }
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(calc(-200px * 30));
+      }
     }
     @keyframes scroll-right {
-      0% { transform: translateX(calc(-200px * 30)); }
-      100% { transform: translateX(0); }
+      0% {
+        transform: translateX(calc(-200px * 30));
+      }
+      100% {
+        transform: translateX(0);
+      }
     }
 
     /* App & Social */
@@ -187,6 +224,7 @@
   <!-- Hero con texto rotativo -->
   <section class="hero">
     <img src="img/logo-lo-Nuestro.png" alt="Lo Nuestro Logo" class="logo">
+    <h1>Lo Nuestro: Creciendo en Comunidad</h1>
     <p id="rotating-text">Cargando…</p>
   </section>
 
@@ -222,7 +260,7 @@
       <div class="logo-carousel">
         <div class="logo-row-container">
           <div class="logo-row row1">
-            <!-- 30 imágenes únicas -->
+            <!-- 30 imágenes únicas (ejemplo) -->
             <img src="https://i.postimg.cc/d1HFV7YJ/telcel.png" alt="Logo 1">
             <img src="https://i.postimg.cc/XvW4HSL6/att.webp" alt="Logo 2">
             <img src="https://i.postimg.cc/9QZcYFGB/bait.png" alt="Logo 3">
@@ -248,3 +286,172 @@
             <img src="https://i.postimg.cc/BQdqF116/dalefon.png" alt="Logo 23">
             <img src="https://i.postimg.cc/5tm1D7KY/movistar2.png" alt="Logo 24">
             <img src="https://i.postimg.cc/L4x5JXTY/eats.png" alt="Logo 25">
+            <img src="https://i.postimg.cc/qMgRyTbm/chedraui.jpg" alt="Logo 26">
+            <img src="https://i.postimg.cc/L55HttTq/cinepolis.png" alt="Logo 27">
+            <img src="https://i.postimg.cc/RZHZpTzK/netflix.png" alt="Logo 28">
+            <img src="https://i.postimg.cc/1t9RthVr/starbucks-card.png" alt="Logo 29">
+            <img src="https://i.postimg.cc/3RBRCJQq/youtube.webp" alt="Logo 30">
+            <!-- luego duplicar para cerrar bucle: -->
+            <img src="https://i.postimg.cc/d1HFV7YJ/telcel.png" alt="Logo 1">
+            <img src="https://i.postimg.cc/XvW4HSL6/att.webp" alt="Logo 2">
+            <img src="https://i.postimg.cc/9QZcYFGB/bait.png" alt="Logo 3">
+            <img src="https://i.postimg.cc/c4Kx6cC2/bienestar.png" alt="Logo 4">
+            <img src="https://i.postimg.cc/pTXxvf30/unefon2.png" alt="Logo 5">
+            <img src="https://i.postimg.cc/gctcY7z3/virgin-mobile.png" alt="Logo 6">
+            <img src="https://i.postimg.cc/BQdqF116/dalefon.png" alt="Logo 7">
+            <img src="https://i.postimg.cc/5tm1D7KY/movistar2.png" alt="Logo 8">
+            <img src="https://i.postimg.cc/L4x5JXTY/eats.png" alt="Logo 9">
+            <img src="https://i.postimg.cc/qMgRyTbm/chedraui.jpg" alt="Logo 10">
+            <img src="https://i.postimg.cc/L55HttTq/cinepolis.png" alt="Logo 11">
+            <img src="https://i.postimg.cc/RZHZpTzK/netflix.png" alt="Logo 12">
+            <img src="https://i.postimg.cc/1t9RthVr/starbucks-card.png" alt="Logo 13">
+            <img src="https://i.postimg.cc/3RBRCJQq/youtube.webp" alt="Logo 14">
+            <img src="https://i.postimg.cc/1z15kN9T/liverpool-regalo.webp" alt="Logo 15">
+            <img src="https://i.postimg.cc/6QV5t5qQ/gandhi.png" alt="Logo 16">
+            <img src="https://i.postimg.cc/d1HFV7YJ/telcel.png" alt="Logo 17">
+            <img src="https://i.postimg.cc/XvW4HSL6/att.webp" alt="Logo 18">
+            <img src="https://i.postimg.cc/9QZcYFGB/bait.png" alt="Logo 19">
+            <img src="https://i.postimg.cc/c4Kx6cC2/bienestar.png" alt="Logo 20">
+            <img src="https://i.postimg.cc/pTXxvf30/unefon2.png" alt="Logo 21">
+            <img src="https://i.postimg.cc/gctcY7z3/virgin-mobile.png" alt="Logo 22">
+            <img src="https://i.postimg.cc/BQdqF116/dalefon.png" alt="Logo 23">
+            <img src="https://i.postimg.cc/5tm1D7KY/movistar2.png" alt="Logo 24">
+            <img src="https://i.postimg.cc/L4x5JXTY/eats.png" alt="Logo 25">
+            <img src="https://i.postimg.cc/qMgRyTbm/chedraui.jpg" alt="Logo 26">
+            <img src="https://i.postimg.cc/L55HttTq/cinepolis.png" alt="Logo 27">
+            <img src="https://i.postimg.cc/RZHZpTzK/netflix.png" alt="Logo 28">
+            <img src="https://i.postimg.cc/1t9RthVr/starbucks-card.png" alt="Logo 29">
+            <img src="https://i.postimg.cc/3RBRCJQq/youtube.webp" alt="Logo 30">
+          </div>
+        </div>
+        <div class="logo-row-container">
+          <div class="logo-row row2">
+            <!-- Repite el mismo bloque anterior, pero esta vez con animación opuesta -->
+            <img src="https://i.postimg.cc/d1HFV7YJ/telcel.png" alt="Logo 1">
+            <img src="https://i.postimg.cc/XvW4HSL6/att.webp" alt="Logo 2">
+            <img src="https://i.postimg.cc/9QZcYFGB/bait.png" alt="Logo 3">
+            <img src="https://i.postimg.cc/c4Kx6cC2/bienestar.png" alt="Logo 4">
+            <img src="https://i.postimg.cc/pTXxvf30/unefon2.png" alt="Logo 5">
+            <img src="https://i.postimg.cc/gctcY7z3/virgin-mobile.png" alt="Logo 6">
+            <img src="https://i.postimg.cc/BQdqF116/dalefon.png" alt="Logo 7">
+            <img src="https://i.postimg.cc/5tm1D7KY/movistar2.png" alt="Logo 8">
+            <img src="https://i.postimg.cc/L4x5JXTY/eats.png" alt="Logo 9">
+            <img src="https://i.postimg.cc/qMgRyTbm/chedraui.jpg" alt="Logo 10">
+            <img src="https://i.postimg.cc/L55HttTq/cinepolis.png" alt="Logo 11">
+            <img src="https://i.postimg.cc/RZHZpTzK/netflix.png" alt="Logo 12">
+            <img src="https://i.postimg.cc/1t9RthVr/starbucks-card.png" alt="Logo 13">
+            <img src="https://i.postimg.cc/3RBRCJQq/youtube.webp" alt="Logo 14">
+            <img src="https://i.postimg.cc/1z15kN9T/liverpool-regalo.webp" alt="Logo 15">
+            <img src="https://i.postimg.cc/6QV5t5qQ/gandhi.png" alt="Logo 16">
+            <img src="https://i.postimg.cc/d1HFV7YJ/telcel.png" alt="Logo 17">
+            <img src="https://i.postimg.cc/XvW4HSL6/att.webp" alt="Logo 18">
+            <img src="https://i.postimg.cc/9QZcYFGB/bait.png" alt="Logo 19">
+            <img src="https://i.postimg.cc/c4Kx6cC2/bienestar.png" alt="Logo 20">
+            <img src="https://i.postimg.cc/pTXxvf30/unefon2.png" alt="Logo 21">
+            <img src="https://i.postimg.cc/gctcY7z3/virgin-mobile.png" alt="Logo 22">
+            <img src="https://i.postimg.cc/BQdqF116/dalefon.png" alt="Logo 23">
+            <img src="https://i.postimg.cc/5tm1D7KY/movistar2.png" alt="Logo 24">
+            <img src="https://i.postimg.cc/L4x5JXTY/eats.png" alt="Logo 25">
+            <img src="https://i.postimg.cc/qMgRyTbm/chedraui.jpg" alt="Logo 26">
+            <img src="https://i.postimg.cc/L55HttTq/cinepolis.png" alt="Logo 27">
+            <img src="https://i.postimg.cc/RZHZpTzK/netflix.png" alt="Logo 28">
+            <img src="https://i.postimg.cc/1t9RthVr/starbucks-card.png" alt="Logo 29">
+            <img src="https://i.postimg.cc/3RBRCJQq/youtube.webp" alt="Logo 30">
+            <!-- duplicado para formar bucle infinito -->
+            <img src="https://i.postimg.cc/d1HFV7YJ/telcel.png" alt="Logo 1">
+            <img src="https://i.postimg.cc/XvW4HSL6/att.webp" alt="Logo 2">
+            <img src="https://i.postimg.cc/9QZcYFGB/bait.png" alt="Logo 3">
+            <img src="https://i.postimg.cc/c4Kx6cC2/bienestar.png" alt="Logo 4">
+            <img src="https://i.postimg.cc/pTXxvf30/unefon2.png" alt="Logo 5">
+            <img src="https://i.postimg.cc/gctcY7z3/virgin-mobile.png" alt="Logo 6">
+            <img src="https://i.postimg.cc/BQdqF116/dalefon.png" alt="Logo 7">
+            <img src="https://i.postimg.cc/5tm1D7KY/movistar2.png" alt="Logo 8">
+            <img src="https://i.postimg.cc/L4x5JXTY/eats.png" alt="Logo 9">
+            <img src="https://i.postimg.cc/qMgRyTbm/chedraui.jpg" alt="Logo 10">
+            <img src="https://i.postimg.cc/L55HttTq/cinepolis.png" alt="Logo 11">
+            <img src="https://i.postimg.cc/RZHZpTzK/netflix.png" alt="Logo 12">
+            <img src="https://i.postimg.cc/1t9RthVr/starbucks-card.png" alt="Logo 13">
+            <img src="https://i.postimg.cc/3RBRCJQq/youtube.webp" alt="Logo 14">
+            <img src="https://i.postimg.cc/1z15kN9T/liverpool-regalo.webp" alt="Logo 15">
+            <img src="https://i.postimg.cc/6QV5t5qQ/gandhi.png" alt="Logo 16">
+            <img src="https://i.postimg.cc/d1HFV7YJ/telcel.png" alt="Logo 17">
+            <img src="https://i.postimg.cc/XvW4HSL6/att.webp" alt="Logo 18">
+            <img src="https://i.postimg.cc/9QZcYFGB/bait.png" alt="Logo 19">
+            <img src="https://i.postimg.cc/c4Kx6cC2/bienestar.png" alt="Logo 20">
+            <img src="https://i.postimg.cc/pTXxvf30/unefon2.png" alt="Logo 21">
+            <img src="https://i.postimg.cc/gctcY7z3/virgin-mobile.png" alt="Logo 22">
+            <img src="https://i.postimg.cc/BQdqF116/dalefon.png" alt="Logo 23">
+            <img src="https://i.postimg.cc/5tm1D7KY/movistar2.png" alt="Logo 24">
+            <img src="https://i.postimg.cc/L4x5JXTY/eats.png" alt="Logo 25">
+            <img src="https://i.postimg.cc/qMgRyTbm/chedraui.jpg" alt="Logo 26">
+            <img src="https://i.postimg.cc/L55HttTq/cinepolis.png" alt="Logo 27">
+            <img src="https://i.postimg.cc/RZHZpTzK/netflix.png" alt="Logo 28">
+            <img src="https://i.postimg.cc/1t9RthVr/starbucks-card.png" alt="Logo 29">
+            <img src="https://i.postimg.cc/3RBRCJQq/youtube.webp" alt="Logo 30">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- App & Social -->
+  <section class="app-social">
+    <div class="container">
+      <h2>Descarga nuestra App</h2>
+      <div class="app-buttons">
+        <a href="https://apps.apple.com/app/idTU_APP_ID" target="_blank" rel="noopener">
+          <img src="img/appstore-badge.png" alt="Descarga en App Store">
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=TU_APP_PACKAGE" target="_blank" rel="noopener">
+          <img src="img/playstore-badge.png" alt="Descarga en Google Play">
+        </a>
+      </div>
+      <h2>Síguenos en redes sociales</h2>
+      <div class="social-links">
+        <!-- <a href="https://twitter.com/TU_USUARIO" target="_blank" rel="noopener">
+          <img src="img/x-icon.png" alt="Síguenos en X">
+        </a> -->
+        <a href="https://www.instagram.com/lonuestroapp/" target="_blank" rel="noopener">
+          <img src="img/instagram-icon.png" alt="Síguenos en Instagram">
+        </a>
+        <a href="https://www.tiktok.com/@TU_USUARIO" target="_blank" rel="noopener">
+          <img src="img/tiktok-icon.png" alt="Síguenos en TikTok">
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script type="module" src="firebase-stats.js"></script>
+  <footer>
+    © 2025 Lo Nuestro. Todos los derechos reservados.
+  </footer>
+
+  <!-- Script para texto rotativo en el hero -->
+  <script>
+    (function() {
+      const lines = [
+        "No solo somos tiendas ni una app.",
+        "Somos nuestra propia comunidad económica.",
+        "Nos pertenece a quienes la usamos.",
+        "Cada compra fortalece nuestro capital.",
+        "Cada decisión la tomamos entre todos.",
+        "No solo consumimos.",
+        "Nos convertimos en dueños.",
+        "Creamos una economía",
+        "que es realmente nuestra."
+      ];
+      let idx = 0;
+      const el = document.getElementById("rotating-text");
+      // Inicial:
+      el.innerText = lines[0];
+      idx = 1;
+
+      setInterval(() => {
+        el.innerText = lines[idx];
+        idx = (idx + 1) % lines.length;
+      }, 3000);
+    })();
+  </script>
+</body>
+</html>
