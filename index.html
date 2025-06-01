@@ -9,139 +9,62 @@
   <style>
     /* Reset y base */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Arial', sans-serif; line-height: 1.6; 
-           background-color: #f4f4f4; color: #333; }
+    body { font-family: 'Arial', sans-serif; line-height: 1.6; background-color: #f4f4f4; color: #333; }
     a { text-decoration: none; color: inherit; }
     .container { width: 90%; max-width: 1200px; margin: 0 auto; }
 
-    /* Hero similar a defensorxs.com */
-    .hero {
-      background: linear-gradient(135deg, #0a3d62 0%, #1e3799 100%);
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 80vh;
-      text-align: center;
-    }
-    .hero .logo { max-width: 180px; margin-bottom: 1rem; }
-    .hero h1 { font-size: 3rem; margin-bottom: 1rem; }
-    .hero p.subtitle { font-size: 1.2rem; opacity: 0.9; }
+    /* Header con logo pequeño */
+    header .logo-container { display: flex; align-items: center; padding: 1rem 0; }
+    header .logo-container img { max-width: 120px; }
+
+    /* Hero */
+    .hero { background: linear-gradient(135deg, #0a3d62 0%, #1e3799 100%); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 60vh; text-align: center; padding: 1rem; }
+    .hero p { font-size: 1rem; max-width: 600px; margin-bottom: 1rem; }
+    .hero p:first-of-type { font-weight: bold; font-size: 1.2rem; }
 
     /* Dashboard section */
-    .dashboard-section {
-      background-color: #fff;
-      padding: 3rem 0;
-    }
-    .dashboard-title {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: 2rem;
-      color: #1e3799;
-    }
-    .dashboard-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1.5rem;
-    }
-        .dashboard-cards .card {
-      background: #1e3799;
-      border-radius: 8px;
-      padding: 2rem 1.5rem 1.5rem; /* Aumentar padding-top para no solapar delta */
-      color: #fff;
-      position: relative;
-      transition: transform 0.3s ease;
-    }
-    .dashboard-cards .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(30,55,153,0.2);
-    }
-    .dashboard-cards .card h3 {
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-    }
-    .dashboard-value {
-      font-size: 2.5rem;
-      font-weight: bold;
-      margin-bottom: 0.5rem;
-    }
-    .delta {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      font-size: 1rem;
-      font-weight: bold;
-    }
+    .dashboard-section { background-color: #fff; padding: 2rem 0; }
+    .dashboard-title { text-align: center; font-size: 2rem; margin-bottom: 1.5rem; color: #1e3799; }
+    .dashboard-cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+    .dashboard-cards .card { background: #1e3799; border-radius: 8px; padding: 2rem 1.5rem 1.5rem; color: #fff; position: relative; width: 220px; text-align: center; transition: transform 0.3s ease; }
+    .dashboard-cards .card:hover { transform: translateY(-5px); box-shadow: 0 8px 16px rgba(30,55,153,0.2); }
+    .dashboard-cards .card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+    .dashboard-value { font-size: 2rem; font-weight: bold; margin-bottom: 0.5rem; }
+    .delta { position: absolute; top: 1rem; right: 1rem; font-size: 1rem; font-weight: bold; }
     .delta.up { color: #2ecc71; }
     .delta.down { color: #e74c3c; }
 
-    /* App & Social Section similar estilo */
-    .app-social {
-      background-color: #1e3799;
-      color: #fff;
-      padding: 3rem 0;
-      text-align: center;
-    }
-    .app-social h2 {
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-    }
-    .app-buttons {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    .app-buttons a img {
-      width: 160px;
-      height: auto;
-      filter: brightness(1.1);
-      transition: filter 0.3s ease;
-    }
-    .app-buttons a img:hover {
-      filter: brightness(0.9);
-    }
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-    }
-    .social-links a img {
-      width: 40px;
-      height: auto;
-      filter: grayscale(100%) brightness(1.2);
-      transition: filter 0.3s ease;
-    }
-    .social-links a img:hover {
-      filter: none;
-    }
+    /* App & Social Section */
+    .app-social { background-color: #1e3799; color: #fff; padding: 2rem 0; text-align: center; }
+    .app-social h2 { font-size: 1.8rem; margin-bottom: 1rem; }
+    .app-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; }
+    .app-buttons a img { width: 140px; height: auto; filter: brightness(1.1); transition: filter 0.3s ease; }
+    .app-buttons a img:hover { filter: brightness(0.9); }
+    .social-links { display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; }
+    .social-links a img { width: 36px; height: auto; filter: grayscale(100%) brightness(1.2); transition: filter 0.3s ease; }
+    .social-links a img:hover { filter: none; }
 
     /* Footer simple */
-    footer {
-      background: #f4f4f4;
-      color: #333;
-      text-align: center;
-      padding: 1rem 0;
-      font-size: 0.9rem;
-    }
+    footer { background: #f4f4f4; color: #333; text-align: center; padding: 1rem 0; font-size: 0.9rem; }
   </style>
 </head>
 <body>
-  <!-- Hero -->
+  <header class="container">
+    <div class="logo-container">
+      <img src="img/logo-lo-Nuestro.png" alt="Lo Nuestro Logo">
+    </div>
+  </header>
+
   <section class="hero">
-    <img src="img/logo-lo-Nuestro.png" alt="Lo Nuestro Logo" class="logo">
     <p>No solo somos tiendas ni una app.<br>
-Somos nuestra propia comunidad económica.</p>
-<p>🔸 Nos pertenece a quienes la usamos.<br>
-🔸 Cada compra que hacemos fortalece nuestro capital.<br>
-🔸 Cada decisión la tomamos entre todos.</p>
-<p>No solo consumimos. Nos convertimos en dueños.<br>
-Creamos una economía que es realmente nuestra.</p>
+    Somos nuestra propia comunidad económica.</p>
+    <p>🔸 Nos pertenece a quienes la usamos.<br>
+    🔸 Cada compra que hacemos fortalece nuestro capital.<br>
+    🔸 Cada decisión la tomamos entre todos.</p>
+    <p>No solo consumimos. Nos convertimos en dueños.<br>
+    Creamos una economía que es realmente nuestra.</p>
   </section>
 
-  <!-- Dashboard Section -->
   <section class="dashboard-section">
     <div class="container">
       <h2 class="dashboard-title">Nuestra Evolución</h2>
@@ -170,12 +93,11 @@ Creamos una economía que es realmente nuestra.</p>
     </div>
   </section>
 
-  <!-- App & Social Section -->
   <section class="app-social">
     <div class="container">
       <h2>Descarga nuestra App</h2>
       <div class="app-buttons">
-        <a href="https://apps.apple.com/app/id6738976783" target="_blank" rel="noopener">
+        <a href="https://apps.apple.com/app/idTU_APP_ID" target="_blank" rel="noopener">
           <img src="img/appstore-badge.png" alt="Descarga en App Store">
         </a>
         <a href="https://play.google.com/store/apps/details?id=TU_APP_PACKAGE" target="_blank" rel="noopener">
@@ -184,16 +106,12 @@ Creamos una economía que es realmente nuestra.</p>
       </div>
       <h2>Síguenos en redes sociales</h2>
       <div class="social-links">
-        <!-- Comentado temporal X -->
         <!-- <a href="https://twitter.com/TU_USUARIO" target="_blank" rel="noopener">
           <img src="img/x-icon.png" alt="Síguenos en X">
-        </a> 
-           <a href="https://www.facebook.com/TU_USUARIO" target="_blank" rel="noopener">
-          <img src="img/facebook-icon.png" alt="Síguenos en Facebook">
         </a> -->
         <a href="https://www.instagram.com/lonuestroapp/" target="_blank" rel="noopener">
           <img src="img/instagram-icon.png" alt="Síguenos en Instagram">
-        </a>    
+        </a>
         <a href="https://www.tiktok.com/@TU_USUARIO" target="_blank" rel="noopener">
           <img src="img/tiktok-icon.png" alt="Síguenos en TikTok">
         </a>
