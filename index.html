@@ -7,32 +7,17 @@
   <title>Lo Nuestro</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
-    /* Reset y base */
+    /* Base reset */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Arial', sans-serif; line-height: 1.6; background-color: #f4f4f4; color: #333; }
+    body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; color: #333; }
     a { text-decoration: none; color: inherit; }
     .container { width: 90%; max-width: 1200px; margin: 0 auto; }
-
-    /* Header con logo pequeño */
-    header .logo-container { display: flex; align-items: center; padding: 1rem 0; }
-    header .logo-container img { max-width: 120px; }
-
-    /* Hero con fondo blanco y mitad de altura */
-    .hero {
-      background: linear-gradient(135deg, #0a3d62 0%, #1e3799 100%);
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 40vh; /* Reducido a la mitad de alto */
-      text-align: center;
-      padding: 1rem;
-    }
-    .hero p { font-size: 0.9rem; max-width: 600px; margin-bottom: 0.8rem; color: #333; }
-    .hero p:first-of-type { font-weight: bold; font-size: 1rem; }
-
-    /* Dashboard section */
+    /* Hero antiguo con fondo azul */
+    .hero { background: linear-gradient(135deg, #0a3d62 0%, #1e3799 100%); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 60vh; text-align: center; padding: 1rem; }
+    .hero p { font-size: 1rem; max-width: 600px; margin-bottom: 1rem; }
+    .hero p:first-of-type { font-weight: bold; font-size: 1.2rem; }
+    .hero .data-period { font-size: 0.9rem; margin-top: 0.5rem; }
+    /* Dashboard antiguo */
     .dashboard-section { background-color: #fff; padding: 2rem 0; }
     .dashboard-title { text-align: center; font-size: 2rem; margin-bottom: 1.5rem; color: #1e3799; }
     .dashboard-cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
@@ -43,17 +28,8 @@
     .delta { position: absolute; top: 1rem; right: 1rem; font-size: 1rem; font-weight: bold; }
     .delta.up { color: #2ecc71; }
     .delta.down { color: #e74c3c; }
-
-    /* App & Social Section */
-    .app-social {
-      background-color: #fff; /* Cambio a blanco */
-      color: #333;
-      padding: 2rem 0;
-      text-align: center;
-    }
-    .app-social h2 {
-      color: #1e3799;
-    }
+    /* App & Social antiguo */
+    .app-social { background-color: #1e3799; color: #fff; padding: 2rem 0; text-align: center; }
     .app-social h2 { font-size: 1.8rem; margin-bottom: 1rem; }
     .app-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; }
     .app-buttons a img { width: 140px; height: auto; filter: brightness(1.1); transition: filter 0.3s ease; }
@@ -61,26 +37,17 @@
     .social-links { display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; }
     .social-links a img { width: 36px; height: auto; filter: grayscale(100%) brightness(1.2); transition: filter 0.3s ease; }
     .social-links a img:hover { filter: none; }
-
-    /* Footer simple */
+    /* Footer antiguo */
     footer { background: #f4f4f4; color: #333; text-align: center; padding: 1rem 0; font-size: 0.9rem; }
   </style>
 </head>
 <body>
-  <header class="container">
-    <div class="logo-container">
-      <img src="img/logo-lo-Nuestro.png" alt="Lo Nuestro Logo">
-    </div>
-  </header>
-
   <section class="hero">
+    <img src="img/logo-lo-Nuestro.png" alt="Lo Nuestro Logo" class="logo" style="max-width:200px; margin-bottom:1rem;">
+    <h1>Lo Nuestro: Creciendo en Comunidad</h1>
     <p>No solo somos tiendas ni una app.<br>
-    Somos nuestra propia comunidad económica.</p>
-    <p>🔸 Nos pertenece a quienes la usamos.<br>
-    🔸 Cada compra que hacemos fortalece nuestro capital.<br>
-    🔸 Cada decisión la tomamos entre todos.</p>
-    <p>No solo consumimos. Nos convertimos en dueños.<br>
-    Creamos una economía que es realmente nuestra.</p>
+       Somos nuestra propia comunidad económica.</p>
+    <p class="data-period">Datos de mayo 2025</p>
   </section>
 
   <section class="dashboard-section">
