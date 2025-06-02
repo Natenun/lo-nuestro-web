@@ -169,6 +169,25 @@
       }
     }
 
+    /* Texto scroll inferior */
+    .text-loop {
+      background-color: #fff;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 0.5rem 0;
+      margin-top: 2rem;
+    }
+    .text-loop p {
+      display: inline-block;
+      font-size: 0.9rem;
+      color: #555;
+      animation: scroll-text 20s linear infinite;
+      padding-left: 100%;
+    }
+    @keyframes scroll-text {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
     /* App & Social */
     .app-social {
       background-color: #1e3799;
@@ -390,6 +409,15 @@
 
     </div>
   </section>
+  <!-- Texto scroll inferior -->
+  <div class="text-loop">
+    <p>
+      Los logotipos mostrados representan marcas en las que los miembros de nuestra comunidad 
+      pueden obtener beneficios indirectos a través de su consumo habitual. Las marcas son propiedad 
+      de sus respectivos dueños.
+    </p>
+  </div>
+
 <!-- Embed TikTok (reducido al 50% mediante scale) -->
   <div class="container" style="margin-top: 2rem; text-align: center; overflow: hidden; width: 162px; height: 287px;">
     <iframe 

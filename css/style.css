@@ -39,3 +39,21 @@ footer {
   height: 40px; /* Hace que cada logo mida la mitad de los 60px del contenedor */
   width: auto;  /* Mantiene la proporción */
 }
+.text-loop {
+  background-color: #fff;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 0.5rem 0;
+  margin-top: 2rem;
+}
+.text-loop p {
+  display: inline-block;
+  font-size: 0.9rem;
+  color: #555;
+  animation: scroll-text 20s linear infinite;
+  padding-left: 100%;
+}
+@keyframes scroll-text {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
