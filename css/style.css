@@ -57,3 +57,59 @@ footer {
   0% { transform: translateX(0); }
   100% { transform: translateX(-100%); }
 }
+/* === CSS PARA INCRUSTAR EL TIKTOK DE FORMA RESPONSIVE Y CON ESTILO === */
+
+.tiktok-section {
+  max-width: 800px;                    /* Ajusta a tu gusto */
+  margin: 2rem auto;                   /* Centramos con márgenes arriba/abajo */
+  padding: 1rem;
+  background-color: #fafafa;           /* Fondo suave */
+  border-radius: 8px;                  /* Bordes redondeados */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);/* Sombra sutil */
+}
+
+.tiktok-title {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.tiktok-description {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+.tiktok-wrapper {
+  position: relative;
+  width: 100%;                         
+  /* 575 ÷ 325 ≈ 1.769 → 176.9%; si se ve cortado, prueba entre 175%–180% */
+  padding-top: 177%;                   
+  overflow: hidden;
+  border-radius: 6px;                  
+}
+
+.tiktok-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Ajustes móviles: */
+@media (max-width: 500px) {
+  .tiktok-section {
+    padding: 0.5rem;
+    margin: 1rem auto;
+  }
+  .tiktok-title {
+    font-size: 1.25rem;
+  }
+  .tiktok-description {
+    font-size: 0.9rem;
+  }
+}
