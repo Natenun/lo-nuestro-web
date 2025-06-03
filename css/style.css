@@ -84,7 +84,7 @@ footer {
 
 .tiktok-wrapper {
   position: relative;
-  width: 100%;                         
+  width: 50%;                         
   /* 575 ÷ 325 ≈ 1.769 → 176.9%; si se ve cortado, prueba entre 175%–180% */
   padding-top: 177%;                   
   overflow: hidden;
