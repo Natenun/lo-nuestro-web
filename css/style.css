@@ -60,7 +60,7 @@ footer {
 /* === CSS PARA INCRUSTAR EL TIKTOK DE FORMA RESPONSIVE Y CON ESTILO === */
 
 .tiktok-section {
-  max-width: 800px;                    /* Ajusta a tu gusto */
+  max-width: 400px;                    /* Ajusta a tu gusto */
   margin: 2rem auto;                   /* Centramos con márgenes arriba/abajo */
   padding: 1rem;
   background-color: #fafafa;           /* Fondo suave */
