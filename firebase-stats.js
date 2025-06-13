@@ -17,7 +17,7 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 const db = getFirestore();
 
-// Formatea delta con signo para valor y flecha para porcentaje con dos decimales
+// Formatea delta con signo y flecha
 function formatoDelta(valor, esPorcentaje = true) {
   const signoClass = valor >= 0 ? 'up' : 'down';
   const abs = Math.abs(valor);
@@ -38,10 +38,12 @@ async function cargarEstadisticas() {
     const [snapAct, snapPrev] = await Promise.all(
       meses.map(m => getDoc(doc(db, 'estadisticas', m)))
     );
+
     if (!snapAct.exists()) {
       console.warn('Documento mayo_2025 no existe');
       return;
     }
+
     const dAct = snapAct.data();
     const dPrev = snapPrev.exists() ? snapPrev.data() : null;
 
@@ -57,41 +59,48 @@ async function cargarEstadisticas() {
     const prevCap = dPrev ? Number(dPrev.capitalizacion) || 0 : 0;
     const prevRend = dPrev ? Number(dPrev.rendimientos) || 0 : 0;
 
-    // Actualizar valores en el DOM con formato
+    // Actualizar DOM con valores actuales
     document.getElementById('socios-totales').innerText = tot.toLocaleString('en-US');
     document.getElementById('socios-porcentaje').innerText = act.toLocaleString('en-US');
     document.getElementById('capital').innerText = `$${capAct.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-    document.getElementById('rendimiento').innerText = `$${rendAct.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    document.getElementById('aportaciones').innerText = `$${rendAct.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    document.getElementById('capitalizacion').innerText = `$${capAct.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
     if (dPrev) {
-      // Delta Socios activos (count y %)
+      // Socios activos
       const deltaActCount = formatoDelta(act - prevAct, false);
       const deltaActPct = formatoDelta(((act - prevAct) / (prevAct || 1)) * 100, true);
       const elSoc = document.getElementById('delta-socios');
       elSoc.className = `delta ${deltaActPct.signo}`;
       elSoc.innerText = `${deltaActCount.texto} (${deltaActPct.texto})`;
 
-      // Delta Socios totales (count y %)
+      // Socios totales
       const deltaTotCount = formatoDelta(tot - prevTot, false);
       const deltaTotPct = formatoDelta(((tot - prevTot) / (prevTot || 1)) * 100, true);
       const elTot = document.getElementById('delta-totales');
       elTot.className = `delta ${deltaTotPct.signo}`;
       elTot.innerText = `${deltaTotCount.texto} (${deltaTotPct.texto})`;
 
-      // Delta Capital total (count y %)
+      // Rendimiento (Aportaciones)
+      const deltaRendCount = formatoDelta(rendAct - prevRend, false);
+      const deltaRendPct = formatoDelta(((rendAct - prevRend) / (prevRend || 1)) * 100, true);
+      const elRend = document.getElementById('delta-aportaciones');
+      elRend.className = `delta ${deltaRendPct.signo}`;
+      elRend.innerText = `${deltaRendCount.texto} (${deltaRendPct.texto})`;
+
+      // Capitalización
       const deltaCapCount = formatoDelta(capAct - prevCap, false);
       const deltaCapPct = formatoDelta(((capAct - prevCap) / (prevCap || 1)) * 100, true);
-      const elCap = document.getElementById('delta-capital');
+      const elCap = document.getElementById('delta-capitalizacion');
       elCap.className = `delta ${deltaCapPct.signo}`;
       elCap.innerText = `${deltaCapCount.texto} (${deltaCapPct.texto})`;
 
-      // Delta Rendimiento (count y %)
-      const deltaRendCount = formatoDelta(rendAct - prevRend, false);
-      const deltaRendPct = formatoDelta(((rendAct - prevRend) / (prevRend || 1)) * 100, true);
-      const elRend = document.getElementById('delta-rendimiento');
-      elRend.className = `delta ${deltaRendPct.signo}`;
-      elRend.innerText = `${deltaRendCount.texto} (${deltaRendPct.texto})`;
+      // Fondo colectivo (usamos mismo capital)
+      const elCap2 = document.getElementById('delta-capital');
+      elCap2.className = `delta ${deltaCapPct.signo}`;
+      elCap2.innerText = `${deltaCapCount.texto} (${deltaCapPct.texto})`;
     }
+
   } catch (e) {
     console.error('Error Firebase:', e);
   }
