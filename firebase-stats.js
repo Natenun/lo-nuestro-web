@@ -53,6 +53,8 @@ async function cargarEstadisticas() {
     const capAct = Number(dAct.capitalizacion) || 0;
     const consumoAct = Number(dAct.consumo) || 0;
     const aportacionesAct = Number(dAct.aportaciones) || 0;
+    const remanentesAct = Number(dAct.remanentes) || 0;
+
 
     // Valores previos
     const prevAct = dPrev ? Number(dPrev.usuarios_activos) || 0 : 0;
@@ -60,6 +62,8 @@ async function cargarEstadisticas() {
     const prevCap = dPrev ? Number(dPrev.capitalizacion) || 0 : 0;
     const prevConsumo = dPrev ? Number(dPrev.consumo) || 0 : 0;
     const prevAportaciones = dPrev ? Number(dPrev.aportaciones) || 0 : 0;
+    const prevRemanentes = dPrev ? Number(dPrev.remanentes) || 0 : 0;
+
 
     // Actualizar valores en el DOM
     document.getElementById('socios-totales').innerText = tot.toLocaleString('en-US');
@@ -67,6 +71,8 @@ async function cargarEstadisticas() {
     document.getElementById('capital').innerText = `$${capAct.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     document.getElementById('consumo').innerText = `$${consumoAct.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     document.getElementById('aportaciones').innerText = `$${aportacionesAct.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    document.getElementById('remanentes').innerText = `$${remanentesAct.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+
 
     if (dPrev) {
       // Delta Socios activos
@@ -103,6 +109,13 @@ async function cargarEstadisticas() {
       const elAport = document.getElementById('delta-aportaciones');
       elAport.className = `delta ${deltaAportPct.signo}`;
       elAport.innerText = `${deltaAportCount.texto} (${deltaAportPct.texto})`;
+      // Delta Remanentes
+      const deltaRemanenteCount = formatoDelta(remanentesAct - prevRemanentes, false);
+      const deltaRemanentePct = formatoDelta(((remanentesAct - prevRemanentes) / (prevRemanentes || 1)) * 100, true);
+      const elRem = document.getElementById('delta-remanentes');
+      elRem.className = `delta ${deltaRemanentePct.signo}`;
+      elRem.innerText = `${deltaRemanenteCount.texto} (${deltaRemanentePct.texto})`;
+
     }
   } catch (e) {
     console.error('Error Firebase:', e);
