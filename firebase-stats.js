@@ -34,13 +34,13 @@ function formatoDelta(valor, esPorcentaje = true) {
 
 async function cargarEstadisticas() {
   try {
-    const meses = ['mayo_2025', 'abril_2025'];
+    const meses = ['junio_2025', 'mayo_2025'];
     const [snapAct, snapPrev] = await Promise.all(
       meses.map(m => getDoc(doc(db, 'estadisticas', m)))
     );
 
     if (!snapAct.exists()) {
-      console.warn('Documento mayo_2025 no existe');
+      console.warn('Documento junio_2025 no existe');
       return;
     }
 
