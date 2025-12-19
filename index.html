@@ -235,6 +235,55 @@
         z-index:0;
       }
       .feature > *{ position:relative; z-index:1; }
+
+      /* Protección del dinero (sección #proteccion) */
+.callout{
+  margin-top:12px;
+  padding:12px;
+  border-radius:16px;
+  border:1px solid rgba(56,182,255,.18);
+  background: rgba(239,254,255,.70);
+}
+
+.steps{
+  margin-top:12px;
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:10px;
+}
+
+.step{
+  padding:10px 12px;
+  border-radius:16px;
+  border:1px solid rgba(11,18,32,.08);
+  background: rgba(255,255,255,.75);
+  color: rgba(11,18,32,.78);
+  font-size:13px;
+  text-align:center;
+}
+
+.quote-grid{
+  margin-top:12px;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:10px;
+}
+
+.quote{
+  padding:12px;
+  border-radius:16px;
+  border:1px solid rgba(255,102,196,.18);
+  background: rgba(255,255,255,.78);
+  color: rgba(11,18,32,.78);
+  font-size:13px;
+}
+
+/* Responsive de esa sección */
+@media (max-width: 920px){
+  .steps{ grid-template-columns: 1fr; }
+  .quote-grid{ grid-template-columns: 1fr; }
+}
+
       .kicker{
         display:flex; align-items:center; gap:10px;
         font-size:12px;
@@ -604,6 +653,7 @@
         <a href="#app">La APP</a>
         <a href="#niveles">Niveles</a>
         <a href="#gobernanza">Gobernanza</a>
+        <a href="#proteccion">Protección</a>
         <a class="btn primary" href="#unete">Unirme</a>
         </nav>
 
@@ -1051,7 +1101,96 @@
           </div>
         </div>
       </section>
-  
+
+      <section id="proteccion">
+  <div class="section-title">
+    <div>
+      <h2>¿Cómo se protege el dinero de los socios en Lo Nuestro?</h2>
+      <p>
+        En Lo Nuestro el dinero no se esconde en instrumentos que nadie entiende.
+        Se transforma en cosas que todos vemos, usamos y necesitamos.
+      </p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="feature col-6">
+      <div class="kicker"><div class="icon">🧾</div><span>1) Auditoría viva</span></div>
+      <h3>Todos somos auditores</h3>
+      <p class="sub">
+        En Lo Nuestro, cada socio puede ver y entender <b>en qué se invierte</b>, <b>dónde está invertido</b> y
+        <b>qué produce</b>. Invertimos únicamente en lo que nosotros mismos consumimos.
+      </p>
+      <div class="callout">
+        <p class="sub">
+          Si el capital está en una tortillería, la auditoría ocurre cada vez que compras tortillas:
+          si produce, vende y da servicio, el capital está vivo. Si no funciona, todos lo notamos.
+        </p>
+      </div>
+    </div>
+
+    <div class="feature col-6">
+      <div class="kicker"><div class="icon">🏗️</div><span>2) Conversión a activos</span></div>
+      <h3>El dinero no “se va”, se convierte</h3>
+      <p class="sub">
+        El dinero no desaparece en una cuenta abstracta. Se convierte en <b>activos reales y locales</b>:
+        negocios, infraestructura y proyectos que atienden necesidades presentes.
+      </p>
+      <div class="callout">
+        <p class="sub">
+          Ejemplo: si hay suficientes socios que consumen tortillas y falta oferta, la cooperativa puede invertir
+          en una tortillería. El negocio tiene clientes (los socios) y se evalúa todos los días en la vida real.
+        </p>
+      </div>
+    </div>
+
+    <div class="feature col-12">
+      <div class="kicker"><div class="icon">📱</div><span>3) Transparencia por diseño</span></div>
+      <h3>La APP como herramienta de información colectiva</h3>
+      <p class="sub">
+        La APP no es solo un monedero: es una herramienta para <b>información</b> y <b>decisión colectiva</b>.
+        A partir de cierto nivel, una de las responsabilidades es registrar gastos para entender:
+        qué se consume, dónde, con qué frecuencia y en qué ciudades.
+      </p>
+      <p class="sub" style="margin-top:10px;">
+        Con esa información, las decisiones de inversión no se toman desde una oficina:
+        se toman desde los hábitos reales de la comunidad.
+      </p>
+    </div>
+
+    <div class="feature col-12">
+      <div class="kicker"><div class="icon">🔐</div><span>4) Participación = seguridad</span></div>
+      <h3>La seguridad viene de activar la participación</h3>
+      <p class="sub">
+        En Lo Nuestro, la seguridad no viene de poner barreras: viene de entender y vigilar juntos.
+      </p>
+
+      <div class="steps">
+        <div class="step">Si participas → <b>entiendes</b></div>
+        <div class="step">Si entiendes → <b>vigilas</b></div>
+        <div class="step">Si vigilas → <b>cuidas el capital</b></div>
+        <div class="step">Si cuidas el capital → <b>crece para todos</b></div>
+      </div>
+
+      <p class="sub" style="margin-top:10px;">
+        Por eso los niveles existen: no son jerarquía, son <b>grados de responsabilidad</b>.
+      </p>
+    </div>
+
+    <div class="feature col-12">
+      <div class="kicker"><div class="icon">✨</div><span>Cierre</span></div>
+      <h3>Una frase para recordarlo</h3>
+      <div class="quote-grid">
+        <div class="quote">“En Lo Nuestro, el dinero se protege porque está a la vista.”</div>
+        <div class="quote">“Nuestro auditor principal es la vida diaria.”</div>
+        <div class="quote">“Invertimos en lo que comemos, usamos y necesitamos.”</div>
+        <div class="quote">“Si el capital está en tu mesa, no necesita esconderse.”</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+      
       <!-- Únete -->
       <section id="unete">
         <div class="card cta">
@@ -1094,11 +1233,16 @@
             <b>Lo Nuestro</b><br />
             <span>Cooperativa tecnológica</span>
           </div>
-          <div class="links">
+          <div class="links">            
+            
             <a href="#que-es">¿Qué es?</a>
-            <a href="#app">APP</a>
+            <a href="#como-funciona">Cómo funciona</a>
+            <a href="#participan">Comercios</a>
+            <a href="#app">La APP</a>
             <a href="#niveles">Niveles</a>
-            <a href="#unete">Unirme</a>
+            <a href="#gobernanza">Gobernanza</a>
+            <a href="#proteccion">Protección</a>
+            
           </div>
           <div>
             <span>© <span id="year"></span> Capital Lo Nuestro S.C. de P.de R.L. de C.V. Todos los derechos reservados.</span>
