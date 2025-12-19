@@ -490,21 +490,32 @@
   }
   
   .brand-logo{
-    height:60px;
-    width:auto;
-    padding:8px 10px;
-    border-radius:14px;
-    border:1px solid rgba(11,18,32,.10);
-    background: rgba(255,255,255,.70);
-    box-shadow: 0 10px 20px rgba(11,18,32,.06);
-    filter: grayscale(1) opacity(.85);
-    transition: filter .2s ease, transform .2s ease;
-  }
+  height:60px;
+  width:auto;
+  padding:8px 10px;
+  border-radius:14px;
+  border:1px solid rgba(11,18,32,.10);
+  background: rgba(255,255,255,.70);
+  box-shadow: 0 10px 20px rgba(11,18,32,.06);
 
-  .brand-logo:hover{
-    filter: none;
-    transform: translateY(-1px);
+  /* Desktop: gris → color al hover */
+  filter: grayscale(1) opacity(.85);
+  transition: filter .2s ease, transform .2s ease;
+}
+
+.brand-logo:hover{
+  filter: none;
+  transform: translateY(-1px);
+}
+
+/* Móvil: siempre a color (no hay hover real) */
+@media (max-width: 920px){
+  .brand-logo{
+    height:46px;
+    filter:none;
   }
+}
+
   
   .logo-pill{
     font-size:12.5px;
