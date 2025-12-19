@@ -469,6 +469,17 @@
   background: rgba(56,182,255,.95);
   box-shadow: 0 0 0 4px rgba(56,182,255,.18);
 }
+.car-link{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  height:100%;
+  cursor:pointer;
+}
+.car-link:hover{
+  filter: brightness(1.02);
+}
 
 
   </style>
@@ -539,9 +550,10 @@
               <button class="car-btn prev" type="button" aria-label="Anterior">‹</button>
 
               <div class="car-window">
-                <img id="carImg" src="img/promo1.png" alt="Promoción 1" />
+                <a href="#unete" class="car-link" aria-label="Ir a Únete">
+                  <img id="carImg" src="/img/promo1.png" alt="Promoción 1" />
+                </a>
               </div>
-
               <button class="car-btn next" type="button" aria-label="Siguiente">›</button>
 
               <div class="car-dots" aria-label="Indicadores de carrusel">
