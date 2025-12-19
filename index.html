@@ -343,6 +343,51 @@
       .headline{ font-size: 36px; }
       .brand{ min-width: auto; }
     }
+    .legal-box{
+  margin-top:10px;
+  border:1px solid rgba(11,18,32,.10);
+  background: rgba(255,255,255,.78);
+  border-radius: 16px;
+  padding:14px;
+}
+
+.legal-row{
+  display:grid;
+  grid-template-columns: 150px 1fr;
+  gap:10px;
+  padding:8px 0;
+  border-bottom: 1px solid rgba(11,18,32,.06);
+}
+
+.legal-row:last-child{ border-bottom:none; }
+
+.legal-label{
+  font-size:12px;
+  color: rgba(11,18,32,.70);
+}
+
+.legal-value{
+  font-size:13px;
+  color: rgba(11,18,32,.85);
+}
+
+.legal-note{
+  margin-top:10px;
+  font-size:12.5px;
+  color: rgba(11,18,32,.75);
+  padding-top:10px;
+  border-top: 1px solid rgba(11,18,32,.06);
+}
+
+.legal-list{
+  margin:10px 0 0;
+  padding-left: 18px;
+  color: rgba(11,18,32,.76);
+  font-size: 13px;
+}
+
+.legal-list li{ margin: 8px 0; }
+
   </style>
 </head>
 
@@ -637,6 +682,46 @@
             Comités para activos, compras y proyectos. Transparencia operativa y decisiones documentadas.
           </p>
         </div>
+
+<div class="feature col-12" id="estatus-legal">
+  <div class="kicker"><div class="icon">📜</div><span>Estatus legal y transparencia</span></div>
+  <h3>¿Es una cooperativa formal bajo ley mexicana?</h3>
+  <p class="sub">
+    Sí. Lo Nuestro está formalmente constituida en México como sociedad cooperativa y usamos la tecnología (APP) para
+    facilitar participación, transparencia y operación.
+  </p>
+
+  <div class="legal-box">
+    <div class="legal-row">
+      <span class="legal-label">Razón social</span>
+      <span class="legal-value">Capital Lo Nuestro Sociedad Cooperativa de Producción de Responsabilidad Limitada de Capital Variable</span>
+    </div>
+
+    <div class="legal-row">
+      <span class="legal-label">Constitución</span>
+      <span class="legal-value">Constituida ante notario en México</span>
+    </div>
+
+    <div class="legal-row">
+      <span class="legal-label">RFC</span>
+      <span class="legal-value">CLN250325TM5</span>
+    </div>
+
+    <div class="legal-note">
+      En la página usamos términos como <b>“cooperativa digital”</b> o <b>“cooperativa tecnológica”</b> para describir
+      cómo operamos: una cooperativa formal que usa una <b>APP</b> para organizar y hacer más accesible la participación.
+    </div>
+  </div>
+
+  <ul class="legal-list">
+    <li><b>No somos asesoría legal o financiera.</b> Compartimos información general para transparencia y educación.</li>
+    <li><b>Los beneficios pueden variar</b> según el tipo de consumo, aliados y reglas vigentes del ecosistema.</li>
+    <li><b>La participación como socio</b> implica derechos y responsabilidades conforme a reglamento y procesos internos.</li>
+    <li><b>La APP es la herramienta</b> para operar y visualizar movimientos; la gobernanza se rige por el reglamento de la cooperativa.</li>
+  </ul>
+</div>
+
+        
         <div class="feature col-12">
           <div class="kicker"><div class="icon">⚖️</div><span>Equilibrio</span></div>
           <h3>Oportunidad de igualar participación</h3>
