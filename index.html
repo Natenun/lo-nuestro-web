@@ -1,514 +1,654 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy"
-        content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://www.googleapis.com;">
-  <title>Lo Nuestro</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#effeff" />
+  <meta name="description" content="Lo Nuestro es una cooperativa tecnológica: una app que convierte consumos en capitalización y crecimiento colectivo." />
+  <title>Lo Nuestro | Cooperativa tecnológica</title>
+
   <style>
-    /* Reset y base */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f4f4f4;
-      color: #333;
-    }
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-    .container {
-      width: 90%;
-      max-width: 1200px;
-      margin: 0 auto;
+    :root{
+      --bg: #ffffff;
+      --mint: #effeff;      /* suave, para fondos */
+      --pink: #ff66c4;      /* acento fuerte */
+      --gold: #ffd700;      /* acento cálido */
+      --blue: #38b6ff;      /* acento principal */
+      --text: #0b1220;
+      --muted: #4b5563;
+      --card: rgba(255,255,255,.85);
+      --border: rgba(11,18,32,.10);
+      --shadow: 0 14px 40px rgba(11,18,32,.10);
+      --radius: 18px;
+      --max: 1120px;
     }
 
-    /* Hero con fondo azul y altura reducida */
-    .hero {
-      background: linear-gradient(135deg, #0a3d62 0%, #1e3799 100%);
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 30vh;            /* Ajustado a la mitad de alto */
-      text-align: center;
-      padding: 1rem;
-    }
-    .hero .logo {
-      max-width: 150px;
-      margin-bottom: 1rem;
-    }
-    .hero h1 {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
-    }
-    .hero p#rotating-text {
-      font-size: 1.5rem;
-      max-width: 600px;
-      margin-bottom: 0.5rem;
-      font-style: italic;
-      height: 2rem;           /* altura fija */
-      overflow: hidden;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+    *{ box-sizing: border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1000px 500px at 10% -10%, rgba(56,182,255,.20), transparent 60%),
+        radial-gradient(900px 500px at 100% 0%, rgba(255,102,196,.16), transparent 55%),
+        radial-gradient(800px 400px at 60% 10%, rgba(255,215,0,.14), transparent 55%),
+        linear-gradient(180deg, var(--mint), var(--bg) 35%);
+      line-height:1.35;
     }
 
-    /* Dashboard */
-    .dashboard-section {
-      background-color: #fff;
-      padding: 2rem 0;
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ max-width:var(--max); margin:0 auto; padding:0 18px; }
+
+    /* Top bar */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,.72);
+      border-bottom: 1px solid var(--border);
     }
-    .dashboard-title {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-      color: #1e3799;
+    .topbar-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px;
+      padding:12px 0;
     }
-    .data-period {
-      text-align: center;
-      font-size: 0.9rem;
-      color: #555;
-      margin-bottom: 1.5rem;
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      min-width: 220px;
     }
-    .dashboard-cards {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
+    .logo{
+      width:40px; height:40px; border-radius:14px;
+      background:
+        radial-gradient(12px 12px at 25% 30%, rgba(255,215,0,.95), transparent 60%),
+        radial-gradient(18px 18px at 70% 20%, rgba(255,102,196,.90), transparent 60%),
+        radial-gradient(22px 22px at 60% 75%, rgba(56,182,255,.85), transparent 65%),
+        linear-gradient(180deg, rgba(239,254,255,.9), rgba(255,255,255,.9));
+      border:1px solid rgba(11,18,32,.10);
+      box-shadow: 0 10px 25px rgba(11,18,32,.10);
     }
-    .dashboard-cards .card {
-      background: #1e3799;
-      border-radius: 8px;
-      padding: 2rem 1.5rem 1.5rem;
-      color: #fff;
-      position: relative;
-      width: 220px;
-      text-align: center;
-      transition: transform 0.3s ease;
+    .brand h1{ font-size:14px; margin:0; letter-spacing:.2px; }
+    .brand p{ margin:0; font-size:12px; color:var(--muted); }
+
+    .nav{
+      display:flex; align-items:center; gap:14px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
     }
-    .dashboard-cards .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(30,55,153,0.2);
+    .nav a{
+      font-size:13px;
+      color: rgba(11,18,32,.78);
+      padding:8px 10px;
+      border-radius:12px;
+      transition: background .2s ease, transform .2s ease;
     }
-    .dashboard-cards .card h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
+    .nav a:hover{ background: rgba(56,182,255,.10); transform: translateY(-1px); }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.80);
+      box-shadow: 0 12px 26px rgba(11,18,32,.10);
+      font-weight:600;
+      font-size:13px;
+      transition: transform .2s ease, background .2s ease;
+      cursor:pointer;
+      user-select:none;
     }
-    .dashboard-value {
-      font-size: 2rem;
-      font-weight: bold;
-      margin-bottom: 0.5rem;
+    .btn:hover{ transform: translateY(-1px); background: rgba(239,254,255,.95); }
+    .btn.primary{
+      border: 1px solid rgba(56,182,255,.35);
+      background: linear-gradient(135deg, rgba(56,182,255,.18), rgba(255,102,196,.10));
     }
-    .delta {
-          position: absolute;
-          top: 1rem;
-          left: 50%;
-          transform: translateX(-50%);
-          font-size: 1rem;
-          font-weight: bold;
-          white-space: nowrap; /* Evita salto en múltiples líneas */
-        }
-    .delta.up {
-      color: #2ecc71;
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      background: rgba(56,182,255,.12);
+      border:1px solid rgba(56,182,255,.18);
+      font-size:12px;
+      color: rgba(11,18,32,.78);
     }
-    .delta.down {
-      color: #e74c3c;
+    .dot{ width:8px; height:8px; border-radius:99px; background: var(--blue); box-shadow: 0 0 0 4px rgba(56,182,255,.15); }
+
+    /* Sections */
+    section{ padding:52px 0; }
+    .hero{
+      padding:56px 0 28px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    .card{
+      background: var(--card);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .hero-left{
+      padding:22px;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-left:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(380px 220px at 12% 18%, rgba(56,182,255,.22), transparent 60%),
+        radial-gradient(360px 220px at 85% 10%, rgba(255,102,196,.18), transparent 58%),
+        radial-gradient(360px 240px at 70% 90%, rgba(255,215,0,.14), transparent 60%);
+      z-index:0;
+    }
+    .hero-left > *{ position:relative; z-index:1; }
+    .headline{
+      margin:12px 0 10px;
+      font-size: 42px;
+      line-height:1.06;
+      letter-spacing: -0.5px;
+    }
+    .sub{
+      margin:0;
+      color: rgba(11,18,32,.78);
+      font-size:15px;
+      max-width: 66ch;
+    }
+    .cta-row{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:16px;
+      align-items:center;
+    }
+    .fine{
+      margin:12px 0 0;
+      color: var(--muted);
+      font-size:12px;
     }
 
-    /* Carousel de logos: dos filas, animaciones opuestas y más lento */
-    .logo-carousel {
-      background-color: #fff;
-      padding: 0;
-      margin-top: 2rem;
-      overflow: hidden;
+    .hero-right{
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
     }
-    .logo-row-container {
-      height: 60px; /* mitad de altura de 120px */
-      width: 100%;
-      overflow: hidden;
+    .stat{
+      padding:14px;
+      border-radius: 16px;
+      border: 1px solid rgba(11,18,32,.08);
+      background: rgba(255,255,255,.70);
     }
-    .logo-row {
-      display: flex;
-      width: calc(200px * 30 * 2); /* ancho de 30 logos duplicados */
-      animation-duration: 90s; /* Más lento */
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
+    .stat b{ font-size:14px; }
+    .stat p{ margin:6px 0 0; color: var(--muted); font-size:12.5px; }
+
+    .mock{
+      flex:1;
+      border-radius: 18px;
+      border: 1px dashed rgba(11,18,32,.16);
+      background:
+        linear-gradient(180deg, rgba(239,254,255,.80), rgba(255,255,255,.90)),
+        radial-gradient(220px 120px at 30% 20%, rgba(56,182,255,.16), transparent 70%),
+        radial-gradient(220px 120px at 70% 60%, rgba(255,102,196,.12), transparent 70%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:18px;
+      color: rgba(11,18,32,.70);
     }
-    .logo-row.row1 {
-      animation-name: scroll-left;
+    .mock small{ display:block; margin-top:6px; color: var(--muted); }
+
+    /* Feature grid */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:14px;
     }
-    .logo-row.row2 {
-      animation-name: scroll-right;
+    .col-4{ grid-column: span 4; }
+    .col-6{ grid-column: span 6; }
+    .col-12{ grid-column: span 12; }
+
+    .feature{
+      padding:16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.78);
+      border:1px solid rgba(11,18,32,.08);
+      box-shadow: 0 10px 24px rgba(11,18,32,.07);
+      position:relative;
+      overflow:hidden;
     }
-    .logo-row img {
-      width: 180px;
-      margin: 0 1rem;
-      flex-shrink: 0;
+    .feature:before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background:
+        radial-gradient(220px 130px at 20% 20%, rgba(56,182,255,.14), transparent 62%),
+        radial-gradient(220px 130px at 85% 0%, rgba(255,102,196,.10), transparent 60%),
+        radial-gradient(220px 140px at 75% 95%, rgba(255,215,0,.10), transparent 62%);
+      opacity:.9;
+      z-index:0;
     }
-    @keyframes scroll-left {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(calc(-200px * 30));
-      }
+    .feature > *{ position:relative; z-index:1; }
+    .kicker{
+      display:flex; align-items:center; gap:10px;
+      font-size:12px;
+      color: rgba(11,18,32,.70);
+      margin:0 0 8px;
     }
-    @keyframes scroll-right {
-      0% {
-        transform: translateX(calc(-200px * 30));
-      }
-      100% {
-        transform: translateX(0);
-      }
+    .icon{
+      width:34px; height:34px;
+      border-radius: 14px;
+      border:1px solid rgba(11,18,32,.10);
+      background: rgba(255,255,255,.80);
+      display:grid; place-items:center;
+      box-shadow: 0 10px 20px rgba(11,18,32,.10);
+      font-size:16px;
+    }
+    h2{
+      margin:0 0 10px;
+      font-size:22px;
+      letter-spacing: -0.2px;
+    }
+    h3{
+      margin:0 0 8px;
+      font-size:16px;
+    }
+    p{ margin:0; }
+
+    .section-title{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
+    }
+    .section-title p{
+      color: var(--muted);
+      font-size:13px;
+      max-width: 70ch;
     }
 
-    /* Texto scroll inferior */
-    .text-loop {
-      background-color: #fff;
-      overflow: hidden;
-      white-space: nowrap;
-      padding: 0rem 0;
-      margin-top: 0rem;
+    /* Levels */
+    .levels{
+      padding:18px;
     }
-    .text-loop p {
-      display: inline-block;
-      font-size: 0.9rem;
-      color: #555;
-      animation: scroll-text 30s linear infinite;
-      padding-left: 100%;
+    .level-row{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin-top:12px;
     }
-    @keyframes scroll-text {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
+    .lvl{
+      padding:14px;
+      border-radius: 16px;
+      border:1px solid rgba(11,18,32,.08);
+      background: rgba(255,255,255,.75);
     }
-    /* App & Social */
-    .app-social {
-      background-color: #1e3799;
-      color: #fff;
-      padding: 2rem 0;
-      text-align: center;
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      border-radius: 999px;
+      font-size:12px;
+      border:1px solid rgba(11,18,32,.10);
+      background: rgba(239,254,255,.75);
     }
-    .app-social h2 {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-    }
-    .app-buttons {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-    .app-buttons a img {
-      width: 140px;
-      height: auto;
-      filter: brightness(1.1);
-      transition: filter 0.3s ease;
-    }
-    .app-buttons a img:hover {
-      filter: brightness(0.9);
-    }
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    .social-links a img {
-      width: 36px;
-      height: auto;
-      filter: grayscale(100%) brightness(1.2);
-      transition: filter 0.3s ease;
-    }
-    .social-links a img:hover {
-      filter: none;
-    }
+    .b0{ box-shadow: 0 0 0 4px rgba(11,18,32,.05); }
+    .b1{ box-shadow: 0 0 0 4px rgba(56,182,255,.15); }
+    .b2{ box-shadow: 0 0 0 4px rgba(255,215,0,.15); }
+    .b3{ box-shadow: 0 0 0 4px rgba(255,102,196,.14); }
+    .lvl p{ margin-top:8px; color: var(--muted); font-size:12.5px; }
 
-    /* Footer */
-    footer {
-      background: #f4f4f4;
-      color: #333;
-      text-align: center;
-      padding: 1rem 0;
-      font-size: 0.9rem;
+    /* CTA */
+    .cta{
+      padding:22px;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:14px;
+      align-items:center;
+      background:
+        radial-gradient(520px 260px at 10% 0%, rgba(56,182,255,.20), transparent 55%),
+        radial-gradient(520px 280px at 100% 100%, rgba(255,102,196,.16), transparent 55%),
+        linear-gradient(180deg, rgba(239,254,255,.9), rgba(255,255,255,.9));
     }
-    /* Media queries para móvil */
-    @media (max-width: 600px) {
-      .hero {
-        height: auto;
-        padding: 2rem 1rem;
-      }
-      .hero h1 {
-        font-size: 1.5rem;
-      }
-      .hero p#rotating-text {
-        font-size: 1.2rem;
-        height: auto;
-        overflow: visible;
-      }
-      .dashboard-cards {
-        flex-direction: column;
-        align-items: center;
-      }
-      .dashboard-cards .card {
-        width: 90%;
-      }
+    .cta h2{ margin:0 0 8px; font-size:24px; }
+    .cta p{ color: rgba(11,18,32,.74); }
+    .cta .actions{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+
+    footer{
+      padding:22px 0 34px;
+      color: var(--muted);
+      font-size:12px;
+    }
+    .foot{
+      display:flex; gap:12px; justify-content:space-between; flex-wrap:wrap;
+      border-top:1px solid var(--border);
+      padding-top:14px;
+    }
+    .links{ display:flex; gap:12px; flex-wrap:wrap; }
+    .links a{ padding:8px 10px; border-radius:12px; border:1px solid rgba(11,18,32,.08); background: rgba(255,255,255,.65); }
+
+    /* Responsive */
+    @media (max-width: 920px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .cta{ grid-template-columns: 1fr; }
+      .cta .actions{ justify-content:flex-start; }
+      .col-4, .col-6{ grid-column: span 12; }
+      .level-row{ grid-template-columns: 1fr; }
+      .headline{ font-size: 36px; }
+      .brand{ min-width: auto; }
     }
   </style>
 </head>
+
 <body>
-  <!-- Hero con texto rotativo -->
-  <section class="hero">
-    <img src="img/logo-lo-Nuestro.png" alt="Lo Nuestro Logo" class="logo">
-    <h1>Creciendo en Comunidad</h1>
-    <p id="rotating-text">Cargando…</p>
-  </section>
-
-  <!-- Dashboard -->
-  <section class="dashboard-section">
-    <div class="container">
-      <h2 class="dashboard-title">Nuestra Evolución</h2>
-      <p class="data-period">Datos de Junio 2025</p>
-      <div class="dashboard-cards">
-
-        <div class="card">
-          <h3>Miembros en comunidad</h3>
-          <span id="socios-totales" class="dashboard-value">—</span>
-          <span id="delta-totales" class="delta"></span>
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="#inicio" aria-label="Ir al inicio">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>Lo Nuestro</h1>
+          <p>Cooperativa tecnológica</p>
         </div>
+      </a>
 
-        <div class="card">
-          <h3>Corazón activo</h3>
-          <span id="socios-porcentaje" class="dashboard-value">—</span>
-          <span id="delta-socios" class="delta"></span>
-        </div>
-
-        <div class="card">
-          <h3>Consumo</h3>
-          <span id="consumo" class="dashboard-value">—</span>
-          <span id="delta-consumo" class="delta"></span>
-        </div>
-
-        <div class="card">
-          <h3>Aportaciones</h3>
-          <span id="aportaciones" class="dashboard-value">—</span>
-          <span id="delta-aportaciones" class="delta"></span>
-        </div>
-        <div class="card">
-          <h3>Remanentes</h3>
-          <span id="remanentes" class="dashboard-value">—</span>
-          <span id="delta-remanentes" class="delta"></span>
-        </div>
-        <div class="card">
-          <h3>Fondo colectivo</h3>
-          <span id="capital" class="dashboard-value">—</span>
-          <span id="delta-capital" class="delta"></span>
-        </div>
-
-      </div>
+      <nav class="nav" aria-label="Navegación principal">
+        <a href="#que-es">¿Qué es?</a>
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#app">La APP</a>
+        <a href="#niveles">Niveles</a>
+        <a href="#gobernanza">Gobernanza</a>
+        <a class="btn primary" href="#unete">Unirme</a>
+      </nav>
     </div>
-  </section>
-      
-      <!-- Carousel de logos: Dos filas -->
-      <div class="logo-carousel">
-        <div class="logo-row-container">
-          <div class="logo-row row1">
-            <!-- 30 imágenes únicas (ejemplo) -->
-            <img src="https://i.postimg.cc/d1HFV7YJ/telcel.png" alt="Logo 1">
-            <img src="https://i.postimg.cc/XvW4HSL6/att.webp" alt="Logo 2">
-            <img src="https://i.postimg.cc/9QZcYFGB/bait.png" alt="Logo 3">
-            <img src="https://i.postimg.cc/c4Kx6cC2/bienestar.png" alt="Logo 4">
-            <img src="https://i.postimg.cc/pTXxvf30/unefon2.png" alt="Logo 5">
-            <img src="https://i.postimg.cc/gctcY7z3/virgin-mobile.png" alt="Logo 6">
-            <img src="https://i.postimg.cc/BQdqF116/dalefon.png" alt="Logo 7">
-            <img src="https://i.postimg.cc/5tm1D7KY/movistar2.png" alt="Logo 8">
-            <img src="https://i.postimg.cc/L4x5JXTY/eats.png" alt="Logo 9">
-            <img src="https://i.postimg.cc/h46rsht6/chedrahui.png" alt="Logo 10">
-            <img src="https://i.postimg.cc/L55HttTq/cinepolis.png" alt="Logo 11">
-            <img src="https://i.postimg.cc/RZHZpTzK/netflix.png" alt="Logo 12">
-            <img src="https://i.postimg.cc/1t9RthVr/starbucks-card.png" alt="Logo 13">
-            <img src="https://i.postimg.cc/3RBRCJQq/youtube.webp" alt="Logo 14">
-            <img src="https://i.postimg.cc/NG6MJzst/liverpool.png" alt="Logo 15">
-            <img src="https://i.postimg.cc/6QV5t5qQ/gandhi.png" alt="Logo 16">
-            <img src="https://i.postimg.cc/d1HFV7YJ/telcel.png" alt="Logo 17">
-            <img src="https://i.postimg.cc/XvW4HSL6/att.webp" alt="Logo 18">
-            <img src="https://i.postimg.cc/9QZcYFGB/bait.png" alt="Logo 19">
-            <img src="https://i.postimg.cc/c4Kx6cC2/bienestar.png" alt="Logo 20">
-            <img src="https://i.postimg.cc/pTXxvf30/unefon2.png" alt="Logo 21">
-            <img src="https://i.postimg.cc/gctcY7z3/virgin-mobile.png" alt="Logo 22">
-            <img src="https://i.postimg.cc/BQdqF116/dalefon.png" alt="Logo 23">
-            <img src="https://i.postimg.cc/5tm1D7KY/movistar2.png" alt="Logo 24">
-            <img src="https://i.postimg.cc/L4x5JXTY/eats.png" alt="Logo 25">
-            <img src="https://i.postimg.cc/h46rsht6/chedrahui.png" alt="Logo 26">
-            <img src="https://i.postimg.cc/L55HttTq/cinepolis.png" alt="Logo 27">
-            <img src="https://i.postimg.cc/RZHZpTzK/netflix.png" alt="Logo 28">
-            <img src="https://i.postimg.cc/1t9RthVr/starbucks-card.png" alt="Logo 29">
-            <img src="https://i.postimg.cc/3RBRCJQq/youtube.webp" alt="Logo 30">
-            <!-- luego duplicar para cerrar bucle: -->
-            <img src="https://i.postimg.cc/d1HFV7YJ/telcel.png" alt="Logo 1">
-            <img src="https://i.postimg.cc/XvW4HSL6/att.webp" alt="Logo 2">
-            <img src="https://i.postimg.cc/9QZcYFGB/bait.png" alt="Logo 3">
-            <img src="https://i.postimg.cc/c4Kx6cC2/bienestar.png" alt="Logo 4">
-            <img src="https://i.postimg.cc/pTXxvf30/unefon2.png" alt="Logo 5">
-            <img src="https://i.postimg.cc/gctcY7z3/virgin-mobile.png" alt="Logo 6">
-            <img src="https://i.postimg.cc/BQdqF116/dalefon.png" alt="Logo 7">
-            <img src="https://i.postimg.cc/5tm1D7KY/movistar2.png" alt="Logo 8">
-            <img src="https://i.postimg.cc/L4x5JXTY/eats.png" alt="Logo 9">
-            <img src="https://i.postimg.cc/qMgRyTbm/chedraui.jpg" alt="Logo 10">
-            <img src="https://i.postimg.cc/h46rsht6/chedrahui.png" alt="Logo 11">
-            <img src="https://i.postimg.cc/RZHZpTzK/netflix.png" alt="Logo 12">
-            <img src="https://i.postimg.cc/1t9RthVr/starbucks-card.png" alt="Logo 13">
-            <img src="https://i.postimg.cc/3RBRCJQq/youtube.webp" alt="Logo 14">
-            <img src="https://i.postimg.cc/NG6MJzst/liverpool.png" alt="Logo 15">
-            <img src="https://i.postimg.cc/6QV5t5qQ/gandhi.png" alt="Logo 16">
-            <img src="https://i.postimg.cc/d1HFV7YJ/telcel.png" alt="Logo 17">
-            <img src="https://i.postimg.cc/XvW4HSL6/att.webp" alt="Logo 18">
-            <img src="https://i.postimg.cc/9QZcYFGB/bait.png" alt="Logo 19">
-            <img src="https://i.postimg.cc/c4Kx6cC2/bienestar.png" alt="Logo 20">
-            <img src="https://i.postimg.cc/pTXxvf30/unefon2.png" alt="Logo 21">
-            <img src="https://i.postimg.cc/gctcY7z3/virgin-mobile.png" alt="Logo 22">
-            <img src="https://i.postimg.cc/BQdqF116/dalefon.png" alt="Logo 23">
-            <img src="https://i.postimg.cc/5tm1D7KY/movistar2.png" alt="Logo 24">
-            <img src="https://i.postimg.cc/L4x5JXTY/eats.png" alt="Logo 25">
-            <img src="https://i.postimg.cc/h46rsht6/chedrahui.png" alt="Logo 26">
-            <img src="https://i.postimg.cc/L55HttTq/cinepolis.png" alt="Logo 27">
-            <img src="https://i.postimg.cc/RZHZpTzK/netflix.png" alt="Logo 28">
-            <img src="https://i.postimg.cc/1t9RthVr/starbucks-card.png" alt="Logo 29">
-            <img src="https://i.postimg.cc/3RBRCJQq/youtube.webp" alt="Logo 30">
+  </header>
+
+  <!-- Hero -->
+  <main id="inicio" class="wrap">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="card hero-left">
+          <span class="pill"><span class="dot"></span> Economía cooperativa + tecnología</span>
+          <h2 class="headline">Convierte tus compras en crecimiento colectivo.</h2>
+          <p class="sub">
+            <b>Lo Nuestro</b> es una cooperativa tecnológica que usa una <b>APP</b> para organizar consumos,
+            capitalizar a los socios y construir patrimonio común con reglas claras, transparencia y participación.
+          </p>
+
+          <div class="cta-row">
+            <a class="btn primary" href="#unete">Empezar ahora</a>
+            <a class="btn" href="#como-funciona">Ver cómo funciona</a>
+            <span class="fine">Mismo gasto de siempre, mejor destino para el beneficio. 🧠✨</span>
           </div>
         </div>
-        <div class="logo-row-container">
-          <div class="logo-row row2">
-            <!-- Repite el mismo bloque anterior, pero esta vez con animación opuesta -->
-            <img src="https://i.postimg.cc/L4x5JXTY/eats.png" alt="Logo 9">
-            <img src="https://i.postimg.cc/h46rsht6/chedrahui.png" alt="Logo 10">
-            <img src="https://i.postimg.cc/L55HttTq/cinepolis.png" alt="Logo 11">
-            <img src="https://i.postimg.cc/RZHZpTzK/netflix.png" alt="Logo 12">
-            <img src="https://i.postimg.cc/1t9RthVr/starbucks-card.png" alt="Logo 13">
-            <img src="https://i.postimg.cc/3RBRCJQq/youtube.webp" alt="Logo 14">
-            <img src="https://i.postimg.cc/NG6MJzst/liverpool.png" alt="Logo 15">
-            <img src="https://i.postimg.cc/6QV5t5qQ/gandhi.png" alt="Logo 16">          
-            <img src="https://i.postimg.cc/L4x5JXTY/eats.png" alt="Logo 25">
-            <img src="https://i.postimg.cc/h46rsht6/chedrahui.png" alt="Logo 26">
-            <img src="https://i.postimg.cc/L55HttTq/cinepolis.png" alt="Logo 27">
-            <img src="https://i.postimg.cc/RZHZpTzK/netflix.png" alt="Logo 28">
-            <img src="https://i.postimg.cc/1t9RthVr/starbucks-card.png" alt="Logo 29">
-            <img src="https://i.postimg.cc/3RBRCJQq/youtube.webp" alt="Logo 30">
-            <img src="https://i.postimg.cc/zXMfkc4q/krispykreme.jpg" alt="Logo 31">
-            <img src="https://i.postimg.cc/BnLj9028/cinemex.png" alt="Logo 32">
-            <!-- duplicado para formar bucle infinito -->
-            <img src="https://i.postimg.cc/L4x5JXTY/eats.png" alt="Logo 9">
-            <img src="https://i.postimg.cc/h46rsht6/chedrahui.png" alt="Logo 10">
-            <img src="https://i.postimg.cc/L55HttTq/cinepolis.png" alt="Logo 11">
-            <img src="https://i.postimg.cc/RZHZpTzK/netflix.png" alt="Logo 12">
-            <img src="https://i.postimg.cc/1t9RthVr/starbucks-card.png" alt="Logo 13">
-            <img src="https://i.postimg.cc/3RBRCJQq/youtube.webp" alt="Logo 14">
-            <img src="https://i.postimg.cc/NG6MJzst/liverpool.png" alt="Logo 15">
-            <img src="https://i.postimg.cc/6QV5t5qQ/gandhi.png" alt="Logo 16">            
-            <img src="https://i.postimg.cc/L4x5JXTY/eats.png" alt="Logo 25">
-            <img src="https://i.postimg.cc/h46rsht6/chedrahui.png" alt="Logo 26">
-            <img src="https://i.postimg.cc/L55HttTq/cinepolis.png" alt="Logo 27">
-            <img src="https://i.postimg.cc/RZHZpTzK/netflix.png" alt="Logo 28">
-            <img src="https://i.postimg.cc/1t9RthVr/starbucks-card.png" alt="Logo 29">
-            <img src="https://i.postimg.cc/3RBRCJQq/youtube.webp" alt="Logo 30">
-            <img src="https://i.postimg.cc/zXMfkc4q/krispykreme.jpg" alt="Logo 31">
-            <img src="https://i.postimg.cc/BnLj9028/cinemex.png" alt="Logo 32">
+
+        <aside class="card hero-right" aria-label="Resumen rápido">
+          <div class="stat">
+            <b>🪙 Capital Libre</b>
+            <p>Beneficio que generas al consumir dentro del ecosistema y que puedes usar o hacer crecer.</p>
           </div>
-        </div>
-        <!-- Texto scroll inferior -->
-        <div class="text-loop">
+          <div class="stat">
+            <b>🔒 Capital Comprometido</b>
+            <p>Parte que decides dejar trabajando con la cooperativa para impulsar proyectos e inversión.</p>
+          </div>
+          <div class="mock" id="app">
+            <div>
+              <b>Aquí va una captura de la APP</b>
+              <small>Reemplaza este recuadro por una imagen cuando la tengas.</small>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Qué es -->
+    <section id="que-es">
+      <div class="section-title">
+        <div>
+          <h2>¿Qué es Lo Nuestro?</h2>
           <p>
-            Los logotipos mostrados representan marcas en las que los miembros de nuestra comunidad 
-            pueden obtener beneficios indirectos a través de su consumo colectivo. Las marcas son propiedad 
-            de sus respectivos dueños.
+            Una cooperativa diseñada para que la gente participe en la economía, sin importar su nivel,
+            usando tecnología para hacerlo simple, transparente y escalable.
           </p>
         </div>
       </div>
 
-    </div>
-  </section>  
+      <div class="grid">
+        <div class="feature col-4">
+          <div class="kicker"><div class="icon">🤝</div><span>Cooperativa</span></div>
+          <h3>Dueños somos nosotros</h3>
+          <p class="sub">
+            Los socios construyen, deciden y se benefician. La meta es equidad, bienestar y continuidad a largo plazo.
+          </p>
+        </div>
 
-<!-- NUEVO EMBED DE TIKTOK (responsive y con estilo) -->
-<section class="tiktok-section">
-  <h2 class="tiktok-title">Nuestro TikTok más reciente</h2>
-  <p class="tiktok-description">
-    En este video compartimos consejos clave sobre cómo participar en la cooperativa y sacar el máximo provecho a tus beneficios.
-  </p>
-  <div class="tiktok-wrapper">
-    <iframe 
-      src="https://www.tiktok.com/embed/v2/7511019554219314438"
-      allow="autoplay; fullscreen"
-      allowfullscreen>
-    </iframe>
-  </div>
-</section>
+        <div class="feature col-4">
+          <div class="kicker"><div class="icon">📱</div><span>Tecnológica</span></div>
+          <h3>Todo vive en la APP</h3>
+          <p class="sub">
+            Módulos para pagos, historial, metas, encuestas, capital personal y proyectos del portafolio cooperativo.
+          </p>
+        </div>
 
-
-  <!-- App & Social -->
-  <section class="app-social">
-    <div class="container">
-      <h2>Descarga nuestra App</h2>
-      <div class="app-buttons">
-        <a href="https://apps.apple.com/app/id6738976783" target="_blank" rel="noopener">
-          <img src="img/appstore-badge.png" alt="Descarga en App Store">
-        </a>
-        <a href="https://play.google.com/store/apps/details?id=com.lonuestroapp.app" target="_blank" rel="noopener">
-          <img src="img/playstore-badge.png" alt="Descarga en Google Play">
-        </a>
+        <div class="feature col-4">
+          <div class="kicker"><div class="icon">🌱</div><span>Capitalización</span></div>
+          <h3>Consumir también construye</h3>
+          <p class="sub">
+            Organizamos compras recurrentes (recargas, tarjetas de regalo, negocios afiliados) para generar beneficios
+            y reinversión.
+          </p>
+        </div>
       </div>
-      <h2>Síguenos en redes sociales</h2>
-      <div class="social-links">
-        <!-- <a href="https://twitter.com/TU_USUARIO" target="_blank" rel="noopener">
-          <img src="img/x-icon.png" alt="Síguenos en X">
-        </a> -->
-        <a href="https://www.instagram.com/lonuestroapp/" target="_blank" rel="noopener">
-          <img src="img/instagram-icon.png" alt="Síguenos en Instagram">
-        </a>
-        <a href="https://www.tiktok.com/@natenun" target="_blank" rel="noopener">
-          <img src="img/tiktok-icon.png" alt="Síguenos en TikTok">
-        </a>
+    </section>
+
+    <!-- Cómo funciona -->
+    <section id="como-funciona">
+      <div class="section-title">
+        <div>
+          <h2>Cómo funciona</h2>
+          <p>
+            Lo Nuestro transforma la coordinación (ponernos de acuerdo) en una máquina ordenada de crecimiento:
+            consumo + tecnología + reinversión + participación.
+          </p>
+        </div>
       </div>
-    </div>
-  </section>
 
-  <script type="module" src="firebase-stats.js"></script>
-  <footer>
-    © 2025 Lo Nuestro. Todos los derechos reservados.
-  </footer>
+      <div class="grid">
+        <div class="feature col-6">
+          <div class="kicker"><div class="icon">🧾</div><span>1) Consumes</span></div>
+          <h3>Pagas como siempre, pero dentro del ecosistema</h3>
+          <p class="sub">
+            Recargas y compras en comercios afiliados o mediante opciones digitales. El beneficio se refleja en tu cuenta.
+          </p>
+        </div>
 
-  <!-- Script para texto rotativo en el hero -->
+        <div class="feature col-6">
+          <div class="kicker"><div class="icon">💠</div><span>2) Se genera capital</span></div>
+          <h3>Capital Libre y Capital Comprometido</h3>
+          <p class="sub">
+            Puedes usar tu saldo o comprometer una parte para hacerlo crecer con la cooperativa, siguiendo el reglamento.
+          </p>
+        </div>
+
+        <div class="feature col-6">
+          <div class="kicker"><div class="icon">🏗️</div><span>3) Se invierte</span></div>
+          <h3>Portafolio cooperativo</h3>
+          <p class="sub">
+            Inversión y proyectos alineados al consumo real de los socios, buscando eficiencia, transparencia y rendimiento.
+          </p>
+        </div>
+
+        <div class="feature col-6">
+          <div class="kicker"><div class="icon">🎯</div><span>4) Metas y progreso</span></div>
+          <h3>Gamificación financiera</h3>
+          <p class="sub">
+            Metas por niveles: educación financiera, participación, indicadores de compromiso y avances visibles en la APP.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- APP -->
+    <section>
+      <div class="section-title">
+        <div>
+          <h2>La APP de Lo Nuestro</h2>
+          <p>
+            Un monedero multiempresa con visión cooperativa: te permite operar hoy y construir futuro con tus decisiones.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="feature col-4">
+          <div class="kicker"><div class="icon">💳</div><span>Pagos</span></div>
+          <h3>Saldo multiempresa</h3>
+          <p class="sub">Lo que generas en una empresa, puedes usarlo en otra dentro del ecosistema.</p>
+        </div>
+
+        <div class="feature col-4">
+          <div class="kicker"><div class="icon">📊</div><span>Transparencia</span></div>
+          <h3>Historial y reportes</h3>
+          <p class="sub">Movimientos, bonos, capital y progreso. Datos claros para decisiones claras.</p>
+        </div>
+
+        <div class="feature col-4">
+          <div class="kicker"><div class="icon">🗳️</div><span>Participación</span></div>
+          <h3>Encuestas y votación</h3>
+          <p class="sub">Decisiones importantes con participación, sin fricción y con trazabilidad.</p>
+        </div>
+
+        <div class="feature col-12">
+          <div class="kicker"><div class="icon">🧩</div><span>Módulos</span></div>
+          <h3>Arquitectura modular</h3>
+          <p class="sub">
+            Cada módulo es independiente (metas personales, inversiones, afiliación de negocios, comités) y se integra de forma flexible,
+            para evolucionar sin romper la experiencia.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Niveles -->
+    <section id="niveles">
+      <div class="section-title">
+        <div>
+          <h2>Niveles dentro de Lo Nuestro</h2>
+          <p>
+            Un camino simple: empezar, construir hábitos, participar y eventualmente convertirse en socio con voz activa.
+          </p>
+        </div>
+      </div>
+
+      <div class="card levels">
+        <div class="level-row">
+          <div class="lvl">
+            <span class="badge b0">⚪ No Iniciado</span>
+            <p>Conoces Lo Nuestro o estás por conocerlo. Exploras, pruebas la APP y entiendes el concepto.</p>
+          </div>
+          <div class="lvl">
+            <span class="badge b1">🔵 Iniciado</span>
+            <p>Usas la APP y comienzas a generar capital. Aprendes lo esencial y te activas con pequeñas metas.</p>
+          </div>
+
+          <div class="lvl">
+            <span class="badge b2">🟡 Constructor</span>
+            <p>Incrementas participación: invitas, consumes con intención, avanzas en metas y contribuyes al crecimiento.</p>
+          </div>
+          <div class="lvl">
+            <span class="badge b3">🟣 Visionario / Guardián</span>
+            <p>Participación madura: comités, decisiones, proyectos. Aquí se consolida la aceptación como socio y su impacto.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gobernanza -->
+    <section id="gobernanza">
+      <div class="section-title">
+        <div>
+          <h2>Gobernanza y equidad</h2>
+          <p>
+            Democracia práctica: cada voz importa, y la tecnología nos ayuda a organizar decisiones sin burocracia.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="feature col-6">
+          <div class="kicker"><div class="icon">🧠</div><span>Reglas vivas</span></div>
+          <h3>Mejora continua</h3>
+          <p class="sub">
+            Las políticas se revisan para sostener equidad y eficiencia. Lo que no sirve, se ajusta. Lo que funciona, se escala.
+          </p>
+        </div>
+        <div class="feature col-6">
+          <div class="kicker"><div class="icon">🧰</div><span>Comités</span></div>
+          <h3>Administración responsable</h3>
+          <p class="sub">
+            Comités para activos, compras y proyectos. Transparencia operativa y decisiones documentadas.
+          </p>
+        </div>
+        <div class="feature col-12">
+          <div class="kicker"><div class="icon">⚖️</div><span>Equilibrio</span></div>
+          <h3>Oportunidad de igualar participación</h3>
+          <p class="sub">
+            Buscamos que quien tiene menos también pueda crecer y acercarse, mediante reglas que favorezcan la capitalización
+            y no la concentración.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Únete -->
+    <section id="unete">
+      <div class="card cta">
+        <div>
+          <h2>Únete a Lo Nuestro</h2>
+          <p>
+            Empieza con la APP, participa en el ecosistema y avanza por niveles. Si quieres, te ayudamos a dar el primer paso
+            con un reto pequeño y medible (recargas, consumos recurrentes, negocios afiliados).
+          </p>
+          <p class="fine">
+            Tip: reemplaza estos botones con tus links reales (App Store, Google Play, WhatsApp, sitio oficial).
+          </p>
+        </div>
+
+        <div class="actions">
+          <a class="btn primary" href="#" onclick="alert('Aquí va tu link de descarga (App Store / Google Play).'); return false;">Descargar APP</a>
+          <a class="btn" href="#" onclick="alert('Aquí va tu link de WhatsApp o formulario.'); return false;">Hablar por WhatsApp</a>
+          <a class="btn" href="#como-funciona">Ver pasos</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap foot">
+        <div>
+          <b>Lo Nuestro</b><br />
+          <span>Cooperativa tecnológica</span>
+        </div>
+        <div class="links">
+          <a href="#que-es">¿Qué es?</a>
+          <a href="#app">APP</a>
+          <a href="#niveles">Niveles</a>
+          <a href="#unete">Unirme</a>
+        </div>
+        <div>
+          <span>© <span id="year"></span> Lo Nuestro. Todos los derechos reservados.</span>
+        </div>
+      </div>
+    </footer>
+  </main>
+
   <script>
-    (function() {
-      const lines = [
-        "No solo somos tiendas",
-        "No solo somos una app.",
-        "Somos una comunidad económica.",
-        "Nos pertenece a quienes la usamos.",
-        "Cada compra fortalece nuestro capital.",
-        "Cada decisión la tomamos entre todos.",
-        "No solo consumimos.",
-        "Nos convertimos en dueños.",
-        "Creamos una economía",
-        "que es realmente nuestra."
-      ];
-      let idx = 0;
-      const el = document.getElementById("rotating-text");
-      // Inicial:
-      el.innerText = lines[0];
-      idx = 1;
-
-      setInterval(() => {
-        el.innerText = lines[idx];
-        idx = (idx + 1) % lines.length;
-      }, 3500);
-    })();
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
