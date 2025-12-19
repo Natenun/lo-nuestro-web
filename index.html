@@ -7,84 +7,6 @@
   <meta name="description" content="Lo Nuestro es una cooperativa tecnológica: una app que convierte consumos en capitalización y crecimiento colectivo." />
   <title>Lo Nuestro | Cooperativa tecnológica</title>
 
-  .carousel{
-  width:100%;
-  height:100%;
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.car-window{
-  width:100%;
-  height:100%;
-  border-radius:16px;
-  overflow:hidden;
-  background: rgba(255,255,255,.65);
-  border: 1px solid rgba(11,18,32,.10);
-}
-
-.car-window img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
-
-.car-btn{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  width:38px;
-  height:38px;
-  border-radius:14px;
-  border:1px solid rgba(11,18,32,.10);
-  background: rgba(255,255,255,.75);
-  box-shadow: 0 10px 20px rgba(11,18,32,.10);
-  cursor:pointer;
-  font-size:22px;
-  line-height:0;
-  display:grid;
-  place-items:center;
-  user-select:none;
-}
-
-.car-btn:hover{
-  background: rgba(239,254,255,.95);
-}
-
-.car-btn.prev{ left:10px; }
-.car-btn.next{ right:10px; }
-
-.car-dots{
-  position:absolute;
-  bottom:10px;
-  left:50%;
-  transform:translateX(-50%);
-  display:flex;
-  gap:6px;
-  padding:6px 8px;
-  border-radius:999px;
-  background: rgba(255,255,255,.70);
-  border:1px solid rgba(11,18,32,.10);
-}
-
-.car-dots .dot{
-  width:8px;
-  height:8px;
-  border-radius:99px;
-  border:none;
-  background: rgba(11,18,32,.22);
-  cursor:pointer;
-}
-
-.car-dots .dot.is-active{
-  background: rgba(56,182,255,.95);
-  box-shadow: 0 0 0 4px rgba(56,182,255,.18);
-}
-
-
   <style>
     :root{
       --bg: #ffffff;
@@ -465,6 +387,83 @@
 }
 
 .legal-list li{ margin: 8px 0; }
+    .carousel{
+  width:100%;
+  height:100%;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.car-window{
+  width:100%;
+  height:100%;
+  border-radius:16px;
+  overflow:hidden;
+  background: rgba(255,255,255,.65);
+  border: 1px solid rgba(11,18,32,.10);
+}
+
+.car-window img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.car-btn{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:38px;
+  height:38px;
+  border-radius:14px;
+  border:1px solid rgba(11,18,32,.10);
+  background: rgba(255,255,255,.75);
+  box-shadow: 0 10px 20px rgba(11,18,32,.10);
+  cursor:pointer;
+  font-size:22px;
+  line-height:0;
+  display:grid;
+  place-items:center;
+  user-select:none;
+}
+
+.car-btn:hover{
+  background: rgba(239,254,255,.95);
+}
+
+.car-btn.prev{ left:10px; }
+.car-btn.next{ right:10px; }
+
+.car-dots{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:6px;
+  padding:6px 8px;
+  border-radius:999px;
+  background: rgba(255,255,255,.70);
+  border:1px solid rgba(11,18,32,.10);
+}
+
+.car-dots .dot{
+  width:8px;
+  height:8px;
+  border-radius:99px;
+  border:none;
+  background: rgba(11,18,32,.22);
+  cursor:pointer;
+}
+
+.car-dots .dot.is-active{
+  background: rgba(56,182,255,.95);
+  box-shadow: 0 0 0 4px rgba(56,182,255,.18);
+}
+
 
   </style>
 </head>
