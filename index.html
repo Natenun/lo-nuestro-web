@@ -7,6 +7,84 @@
   <meta name="description" content="Lo Nuestro es una cooperativa tecnológica: una app que convierte consumos en capitalización y crecimiento colectivo." />
   <title>Lo Nuestro | Cooperativa tecnológica</title>
 
+  .carousel{
+  width:100%;
+  height:100%;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.car-window{
+  width:100%;
+  height:100%;
+  border-radius:16px;
+  overflow:hidden;
+  background: rgba(255,255,255,.65);
+  border: 1px solid rgba(11,18,32,.10);
+}
+
+.car-window img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.car-btn{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:38px;
+  height:38px;
+  border-radius:14px;
+  border:1px solid rgba(11,18,32,.10);
+  background: rgba(255,255,255,.75);
+  box-shadow: 0 10px 20px rgba(11,18,32,.10);
+  cursor:pointer;
+  font-size:22px;
+  line-height:0;
+  display:grid;
+  place-items:center;
+  user-select:none;
+}
+
+.car-btn:hover{
+  background: rgba(239,254,255,.95);
+}
+
+.car-btn.prev{ left:10px; }
+.car-btn.next{ right:10px; }
+
+.car-dots{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:6px;
+  padding:6px 8px;
+  border-radius:999px;
+  background: rgba(255,255,255,.70);
+  border:1px solid rgba(11,18,32,.10);
+}
+
+.car-dots .dot{
+  width:8px;
+  height:8px;
+  border-radius:99px;
+  border:none;
+  background: rgba(11,18,32,.22);
+  cursor:pointer;
+}
+
+.car-dots .dot.is-active{
+  background: rgba(56,182,255,.95);
+  box-shadow: 0 0 0 4px rgba(56,182,255,.18);
+}
+
+
   <style>
     :root{
       --bg: #ffffff;
@@ -452,15 +530,29 @@
             <p>Parte que decides dejar trabajando con la cooperativa para impulsar proyectos e inversión.</p>
           </div>
           <div class="mock" id="app">
-            <div class="mock" id="app">
-            <img
-              src="img/23.png"
-              alt="Captura de la app Lo Nuestro"
-              style="width:100%; height:100%; object-fit:cover; border-radius:16px;"
-            />
+            <div class="carousel" aria-label="Promociones Lo Nuestro">
+              <button class="car-btn prev" type="button" aria-label="Anterior">‹</button>
+
+              <div class="car-window">
+                <img id="carImg" src="img/promo1.png" alt="Promoción 1" />
+              </div>
+
+              <button class="car-btn next" type="button" aria-label="Siguiente">›</button>
+
+              <div class="car-dots" aria-label="Indicadores de carrusel">
+                <button class="dot is-active" type="button" aria-label="Ir a promoción 1"></button>
+                <button class="dot" type="button" aria-label="Ir a promoción 2"></button>
+                <button class="dot" type="button" aria-label="Ir a promoción 3"></button>
+                <button class="dot" type="button" aria-label="Ir a promoción 4"></button>
+                <button class="dot" type="button" aria-label="Ir a promoción 5"></button>
+                <button class="dot" type="button" aria-label="Ir a promoción 6"></button>
+                <button class="dot" type="button" aria-label="Ir a promoción 7"></button>
+                <button class="dot" type="button" aria-label="Ir a promoción 8"></button>
+                <button class="dot" type="button" aria-label="Ir a promoción 9"></button>
+              </div>
+            </div>
           </div>
 
-          </div>
         </aside>
       </div>
     </section>
@@ -789,7 +881,75 @@
   </main>
 
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+  // Año en el footer
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Carrusel promos (promo1 a promo9)
+  (function(){
+    const imgs = [
+      "img/promo1.png","img/promo2.png","img/promo3.png",
+      "img/promo4.png","img/promo5.png","img/promo6.png",
+      "img/promo7.png","img/promo8.png","img/promo9.png"
+    ];
+
+    const imgEl = document.getElementById("carImg");
+    if(!imgEl) return; // por si el carrusel no existe en alguna página
+
+    const dots = Array.from(document.querySelectorAll(".car-dots .dot"));
+    const prevBtn = document.querySelector(".car-btn.prev");
+    const nextBtn = document.querySelector(".car-btn.next");
+
+    let i = 0;
+    let timer = null;
+
+    function render(){
+      imgEl.src = imgs[i];
+      imgEl.alt = `Promoción ${i+1}`;
+      dots.forEach((d, idx) => d.classList.toggle("is-active", idx === i));
+    }
+
+    function next(){ i = (i + 1) % imgs.length; render(); }
+    function prev(){ i = (i - 1 + imgs.length) % imgs.length; render(); }
+
+    function start(){
+      stop();
+      timer = setInterval(next, 3500);
+    }
+    function stop(){
+      if(timer) clearInterval(timer);
+      timer = null;
+    }
+
+    nextBtn?.addEventListener("click", () => { next(); start(); });
+    prevBtn?.addEventListener("click", () => { prev(); start(); });
+
+    dots.forEach((d, idx) => {
+      d.addEventListener("click", () => { i = idx; render(); start(); });
+    });
+
+    const car = document.querySelector(".carousel");
+    car?.addEventListener("mouseenter", stop);
+    car?.addEventListener("mouseleave", start);
+
+    // Swipe básico en móvil
+    let x0 = null;
+    car?.addEventListener("touchstart", (e) => { x0 = e.touches[0].clientX; }, {passive:true});
+    car?.addEventListener("touchend", (e) => {
+      if(x0 === null) return;
+      const x1 = e.changedTouches[0].clientX;
+      const dx = x1 - x0;
+      x0 = null;
+      if(Math.abs(dx) > 40){
+        dx < 0 ? next() : prev();
+        start();
+      }
+    }, {passive:true});
+
+    render();
+    start();
+  })();
+</script>
+
+
 </body>
 </html>
