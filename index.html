@@ -24,7 +24,11 @@
       }
   
       *{ box-sizing: border-box; }
-      html{ scroll-behavior:smooth; }
+      html{
+        scroll-behavior: smooth;
+        scroll-padding-top: 90px; /* ajusta 80–110 según tu topbar */
+          }
+
       body{
         margin:0;
         font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
@@ -630,6 +634,45 @@
   /* Para que el menú absoluto se posicione bien dentro de la topbar */
   .topbar-inner{ position:relative; }
 }
+/* Mini-historia (Problema → Decisión → Resultado) */
+.mini-story{
+  margin-top:12px;
+  padding:12px 14px;
+  border-radius:16px;
+  border:1px solid rgba(11,18,32,.10);
+  background: rgba(255,255,255,.72);
+  box-shadow: 0 10px 24px rgba(11,18,32,.06);
+}
+
+.mini-story-title{
+  font-size:12px;
+  color: rgba(11,18,32,.70);
+  margin:0 0 8px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.mini-story-title .tag{
+  font-size:11px;
+  padding:4px 8px;
+  border-radius:999px;
+  border:1px solid rgba(56,182,255,.22);
+  background: rgba(56,182,255,.10);
+}
+
+.mini-story-list{
+  margin:0;
+  padding-left:18px;
+  color: rgba(11,18,32,.78);
+  font-size:13px;
+}
+
+.mini-story-list li{ margin:8px 0; }
+
+.mini-story-list b{
+  color: rgba(11,18,32,.92);
+}
 
     </style>
   </head>
@@ -1125,7 +1168,8 @@
 
       <div class="callout">
         <p class="sub">
-          Lo que ganas en las primeras etapas no viene de tu dinero: viene de la cooperación.
+          Lo que ganas en las primeras etapas no viene de tu dinero: viene de tus compras.
+          Cada compra te regresa una parte en dinero electrónico, así lo generas.
           Aquí no empiezas invirtiendo dinero. Empiezas participando.
         </p>
       </div>
@@ -1142,8 +1186,16 @@
 
       <div class="callout">
         <p class="sub">
-          Ejemplo: si en una ciudad hay suficientes socios y todos consumen tortillas, pero no existe una tortillería afiliada,
-          la cooperativa puede invertir en una tortillería. El capital se vuelve un negocio real, con clientes reales, produciendo todos los días.
+          <div class="mini-story">
+          <p class="mini-story-title">
+            <span class="tag">Mini-historia</span> Tortillería
+          </p>
+          <ul class="mini-story-list">
+            <li><b>Problema:</b> en la ciudad hay socios que consumen tortillas, pero no existe una tortillería afiliada.</li>
+            <li><b>Decisión:</b> la cooperativa invierte en una tortillería para cubrir una necesidad real y constante.</li>
+            <li><b>Resultado:</b> el capital se convierte en un negocio visible, con clientes reales (los socios), produciendo todos los días.</li>
+          </ul>
+        </div>
         </p>
       </div>
 
