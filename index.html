@@ -708,6 +708,15 @@
   .humano-grid{ grid-template-columns: 1fr; }
   .humano-badge{ width:min(220px, 60vw); }
 }
+/* Proteccion: permite que el texto use el ancho real del card */
+#proteccion .sub{
+  max-width: none;
+}
+
+/* Si tienes callout, asegúrate que también tome ancho completo */
+#proteccion .callout{
+  width: 100%;
+}
 
     </style>
   </head>
