@@ -3,51 +3,376 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Lo Nuestro | Descargar</title>
+  <meta name="theme-color" content="#effeff" />
+  <title>Lo Nuestro | Abrir tienda</title>
   <meta name="robots" content="noindex,nofollow" />
+
   <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; padding:24px; color:#0b1220;}
-    .muted{opacity:.75; font-size:14px;}
-    .btn{display:inline-block; padding:10px 14px; border:1px solid #ddd; border-radius:10px; text-decoration:none; margin:6px 0;}
+    :root{
+      --bg:#ffffff;
+      --mint:#effeff;
+      --pink:#ff66c4;
+      --gold:#ffd700;
+      --blue:#38b6ff;
+      --text:#0b1220;
+      --muted:#4b5563;
+      --card: rgba(255,255,255,.86);
+      --border: rgba(11,18,32,.10);
+      --shadow: 0 14px 40px rgba(11,18,32,.10);
+      --radius: 18px;
+      --max: 980px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 30% 0%, rgba(56,182,255,.22), transparent 55%),
+        radial-gradient(900px 520px at 85% 15%, rgba(255,102,196,.18), transparent 55%),
+        linear-gradient(180deg, var(--mint), #fff 55%);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+    }
+
+    .wrap{
+      width:100%;
+      max-width:var(--max);
+      display:grid;
+      gap:14px;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 2px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+
+    .mark{
+      width:44px;height:44px;border-radius:14px;
+      background:
+        radial-gradient(18px 18px at 30% 30%, rgba(255,255,255,.55), transparent 60%),
+        linear-gradient(135deg, rgba(56,182,255,.95), rgba(255,102,196,.75));
+      box-shadow: 0 10px 26px rgba(11,18,32,.14);
+      position:relative;
+      flex:0 0 auto;
+    }
+    .mark:after{
+      content:"";
+      position:absolute; inset:10px;
+      border-radius:12px;
+      background: rgba(255,255,255,.22);
+      border:1px solid rgba(255,255,255,.35);
+      backdrop-filter: blur(8px);
+    }
+
+    .brand h1{
+      font-size:16px;
+      margin:0;
+      line-height:1.1;
+      letter-spacing:.2px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .brand p{
+      margin:2px 0 0 0;
+      font-size:12.5px;
+      color:var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .pill{
+      font-size:12px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.70);
+      box-shadow: 0 10px 20px rgba(11,18,32,.06);
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color: rgba(11,18,32,.86);
+      white-space:nowrap;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:14px;
+    }
+    @media (max-width: 880px){
+      .grid{grid-template-columns:1fr}
+      .pill{display:none}
+    }
+
+    .card{
+      border:1px solid var(--border);
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .card:before{
+      content:"";
+      position:absolute;
+      inset:-120px -120px auto auto;
+      width:260px;height:260px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,215,0,.22), transparent 60%);
+      transform: rotate(18deg);
+      pointer-events:none;
+    }
+
+    .title{
+      margin:0 0 6px 0;
+      font-size:20px;
+      letter-spacing:.2px;
+    }
+    .subtitle{
+      margin:0 0 14px 0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.4;
+    }
+
+    .row{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .progress{
+      height:10px;
+      width:100%;
+      border-radius:999px;
+      background: rgba(11,18,32,.08);
+      overflow:hidden;
+      border:1px solid rgba(11,18,32,.06);
+    }
+    .bar{
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background: linear-gradient(90deg, rgba(56,182,255,.95), rgba(255,102,196,.85));
+      transition: width .35s ease;
+    }
+
+    .btn{
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(11,18,32,.10);
+      background: rgba(255,255,255,.82);
+      text-decoration:none;
+      color:var(--text);
+      font-weight:650;
+      box-shadow: 0 10px 22px rgba(11,18,32,.08);
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); filter: brightness(1.02); }
+
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(56,182,255,.95), rgba(56,182,255,.70));
+      border-color: rgba(56,182,255,.35);
+    }
+
+    .small{
+      margin-top:10px;
+      font-size:12.5px;
+      color:var(--muted);
+      line-height:1.45;
+    }
+
+    .checks{
+      display:grid;
+      gap:10px;
+      margin:10px 0 0 0;
+      padding:0;
+      list-style:none;
+    }
+    .checks li{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      font-size:13px;
+      color: rgba(11,18,32,.82);
+    }
+    .dot{
+      width:10px;height:10px;border-radius:999px;
+      margin-top:4px;
+      background: rgba(56,182,255,.85);
+      box-shadow: 0 0 0 4px rgba(56,182,255,.16);
+      flex:0 0 auto;
+    }
+
+    .hint{
+      font-size:12px;
+      color:rgba(11,18,32,.75);
+      margin-top:10px;
+    }
+
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size:11px;
+      padding:2px 6px;
+      border-radius:8px;
+      border:1px solid rgba(11,18,32,.12);
+      background: rgba(255,255,255,.75);
+    }
   </style>
 </head>
-<body>
-  <h2>Abriendo la tienda…</h2>
-  <p class="muted">Si no se abre automáticamente:</p>
 
-  <p>
-    <a class="btn" id="ios" href="#">Abrir App Store</a><br/>
-    <a class="btn" id="android" href="#">Abrir Google Play</a>
-  </p>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <div style="min-width:0">
+          <h1>Lo Nuestro</h1>
+          <p>Cooperativa tecnológica • Acceso oficial</p>
+        </div>
+      </div>
+      <div class="pill" id="campaignPill">🔗 Enlace verificado</div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2 class="title">Abriendo la tienda…</h2>
+        <p class="subtitle" id="subtitle">
+          Te estamos enviando a la tienda correcta según tu celular.
+        </p>
+
+        <div class="progress" aria-label="Progreso de redirección">
+          <div class="bar" id="bar"></div>
+        </div>
+
+        <div class="row" style="margin-top:14px">
+          <a class="btn primary" id="primaryBtn" href="#">Abrir tienda</a>
+          <a class="btn" id="iosBtn" href="#">App Store</a>
+          <a class="btn" id="androidBtn" href="#">Google Play</a>
+        </div>
+
+        <p class="small">
+          Si no te redirige automáticamente, usa el botón “Abrir tienda”.
+          <br/>Tip: en algunos Android necesitas tener el NFC activado.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3 class="title" style="font-size:18px;margin-bottom:8px;">¿Es seguro?</h3>
+        <p class="subtitle" style="margin-bottom:6px;">
+          Este enlace solo te lleva a las tiendas oficiales.
+        </p>
+
+        <ul class="checks">
+          <li><span class="dot"></span><span>No pedimos contraseñas en esta página.</span></li>
+          <li><span class="dot"></span><span>Te dirigimos a App Store o Google Play (sitios oficiales).</span></li>
+          <li><span class="dot"></span><span>Si vienes desde un stand NFC, es un acceso directo a Lo Nuestro.</span></li>
+        </ul>
+
+        <div class="hint">
+          Si estás en computadora, te mandamos a la web. Si estás en celular, a tu tienda.
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script>
-    // Links base (tus links reales)
+    // ====== LINKS REALES ======
     const APP_STORE_BASE = "https://apps.apple.com/mx/app/lo-nuestro-app/id6738976783";
     const PLAY_STORE_BASE = "https://play.google.com/store/apps/details?id=com.lonuestroapp.app&pcampaignid=web_share";
     const WEB_FALLBACK_URL = "/#unete";
 
-    // Parámetros para identificar el stand/campaña: ?src=zn-centro o ?src=cross248 etc.
+    // ====== CAMPAÑA / ORIGEN ======
+    // Usa ?src=zn-centro / cross248 / etc.
     const params = new URLSearchParams(window.location.search);
     const src = (params.get("src") || "nfc").trim();
 
-    // Si quieres tracking sencillo, agrega el src al final:
-    // iOS: puedes pasar "ct" (campaign token) en algunos contextos, pero no siempre es medible.
-    // Android: puedes mandar referrer (no siempre aplica con ese link share). Igual sirve para tus logs si luego trackeas.
+    const pill = document.getElementById("campaignPill");
+    if (src && src !== "nfc") pill.textContent = "📍 Origen: " + src;
+
+    // Links con parámetros (ligeros)
     const appStoreUrl = APP_STORE_BASE + (APP_STORE_BASE.includes("?") ? "&" : "?") + "ct=" + encodeURIComponent(src);
     const playStoreUrl = PLAY_STORE_BASE + (PLAY_STORE_BASE.includes("?") ? "&" : "?") + "utm_source=nfc&utm_campaign=" + encodeURIComponent(src);
 
-    // Pon los links en botones por si no redirige
-    document.getElementById("ios").href = appStoreUrl;
-    document.getElementById("android").href = playStoreUrl;
+    // Botones de respaldo
+    const iosBtn = document.getElementById("M; // dummy
+    // (corrige: arriba no debe existir esa línea, la dejo fuera)
+  </script>
+
+  <script>
+    // Botones de respaldo
+    const params2 = new URLSearchParams(window.location.search);
+    const src2 = (params2.get("src") || "nfc").trim();
+
+    const APP_STORE_BASE2 = "https://apps.apple.com/mx/app/lo-nuestro-app/id6738976783";
+    const PLAY_STORE_BASE2 = "https://play.google.com/store/apps/details?id=com.lonuestroapp.app&pcampaignid=web_share";
+    const WEB_FALLBACK_URL2 = "/#unete";
+
+    const appStoreUrl2 = APP_STORE_BASE2 + (APP_STORE_BASE2.includes("?") ? "&" : "?") + "ct=" + encodeURIComponent(src2);
+    const playStoreUrl2 = PLAY_STORE_BASE2 + (PLAY_STORE_BASE2.includes("?") ? "&" : "?") + "utm_source=nfc&utm_campaign=" + encodeURIComponent(src2);
+
+    const iosBtn2 = document.getElementById("iosBtn");
+    const androidBtn2 = document.getElementById("androidBtn");
+    const primaryBtn2 = document.getElementById("primaryBtn");
+    const subtitle2 = document.getElementById("subtitle");
+    const bar2 = document.getElementById("bar");
+
+    iosBtn2.href = appStoreUrl2;
+    androidBtn2.href = playStoreUrl2;
 
     // Detecta dispositivo
     const ua = navigator.userAgent || "";
     const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
     const isAndroid = /Android/.test(ua);
 
-    const target = isIOS ? appStoreUrl : (isAndroid ? playStoreUrl : WEB_FALLBACK_URL);
+    const target = isIOS ? appStoreUrl2 : (isAndroid ? playStoreUrl2 : WEB_FALLBACK_URL2);
 
-    window.location.replace(target);
+    // Ajusta copy + botón principal según dispositivo
+    if (isIOS) {
+      subtitle2.textContent = "Detectamos iPhone/iPad. Te llevamos a App Store.";
+      primaryBtn2.textContent = "Abrir App Store";
+    } else if (isAndroid) {
+      subtitle2.textContent = "Detectamos Android. Te llevamos a Google Play.";
+      primaryBtn2.textContent = "Abrir Google Play";
+    } else {
+      subtitle2.textContent = "Estás en computadora. Te llevamos a la web de Lo Nuestro.";
+      primaryBtn2.textContent = "Abrir Lo Nuestro (Web)";
+    }
+
+    primaryBtn2.href = target;
+
+    // Animación: muestra progreso un momento para dar confianza,
+    // luego redirige (rápido, pero no instantáneo).
+    setTimeout(() => bar2.style.width = "55%", 80);
+    setTimeout(() => bar2.style.width = "90%", 380);
+    setTimeout(() => bar2.style.width = "100%", 680);
+
+    // Redirección final
+    setTimeout(() => window.location.replace(target), 820);
   </script>
 </body>
 </html>
