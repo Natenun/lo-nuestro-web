@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lo Nuestro | Descargar</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; padding:24px; color:#0b1220;}
+    .muted{opacity:.75; font-size:14px;}
+    .btn{display:inline-block; padding:10px 14px; border:1px solid #ddd; border-radius:10px; text-decoration:none; margin:6px 0;}
+  </style>
+</head>
+<body>
+  <h2>Abriendo la tienda…</h2>
+  <p class="muted">Si no se abre automáticamente:</p>
+
+  <p>
+    <a class="btn" id="ios" href="#">Abrir App Store</a><br/>
+    <a class="btn" id="android" href="#">Abrir Google Play</a>
+  </p>
+
+  <script>
+    // Links base (tus links reales)
+    const APP_STORE_BASE = "https://apps.apple.com/mx/app/lo-nuestro-app/id6738976783";
+    const PLAY_STORE_BASE = "https://play.google.com/store/apps/details?id=com.lonuestroapp.app&pcampaignid=web_share";
+    const WEB_FALLBACK_URL = "/#unete";
+
+    // Parámetros para identificar el stand/campaña: ?src=zn-centro o ?src=cross248 etc.
+    const params = new URLSearchParams(window.location.search);
+    const src = (params.get("src") || "nfc").trim();
+
+    // Si quieres tracking sencillo, agrega el src al final:
+    // iOS: puedes pasar "ct" (campaign token) en algunos contextos, pero no siempre es medible.
+    // Android: puedes mandar referrer (no siempre aplica con ese link share). Igual sirve para tus logs si luego trackeas.
+    const appStoreUrl = APP_STORE_BASE + (APP_STORE_BASE.includes("?") ? "&" : "?") + "ct=" + encodeURIComponent(src);
+    const playStoreUrl = PLAY_STORE_BASE + (PLAY_STORE_BASE.includes("?") ? "&" : "?") + "utm_source=nfc&utm_campaign=" + encodeURIComponent(src);
+
+    // Pon los links en botones por si no redirige
+    document.getElementById("ios").href = appStoreUrl;
+    document.getElementById("android").href = playStoreUrl;
+
+    // Detecta dispositivo
+    const ua = navigator.userAgent || "";
+    const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+    const isAndroid = /Android/.test(ua);
+
+    const target = isIOS ? appStoreUrl : (isAndroid ? playStoreUrl : WEB_FALLBACK_URL);
+
+    window.location.replace(target);
+  </script>
+</body>
+</html>
