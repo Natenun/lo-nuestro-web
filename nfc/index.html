@@ -243,15 +243,15 @@
       background: rgba(255,255,255,.75);
     }
   </style>
-  <!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZSH7X42PWW"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-ZSH7X42PWW');
-</script>
 
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZSH7X42PWW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZSH7X42PWW');
+  </script>
 </head>
 
 <body>
@@ -315,73 +315,71 @@
     const PLAY_STORE_BASE = "https://play.google.com/store/apps/details?id=com.lonuestroapp.app&pcampaignid=web_share";
     const WEB_FALLBACK_URL = "/#unete";
 
-    // ====== CAMPAÑA / ORIGEN ======
-    // Usa ?src=zn-centro / cross248 / etc.
+    // ====== ORIGEN ======
+    // Usa ?src=zn-centro / carniceria / cross248 / etc.
     const params = new URLSearchParams(window.location.search);
     const src = (params.get("src") || "nfc").trim();
 
     const pill = document.getElementById("campaignPill");
     if (src && src !== "nfc") pill.textContent = "📍 Origen: " + src;
 
-    // Links con parámetros (ligeros)
+    // Links con parámetros
     const appStoreUrl = APP_STORE_BASE + (APP_STORE_BASE.includes("?") ? "&" : "?") + "ct=" + encodeURIComponent(src);
     const playStoreUrl = PLAY_STORE_BASE + (PLAY_STORE_BASE.includes("?") ? "&" : "?") + "utm_source=nfc&utm_campaign=" + encodeURIComponent(src);
 
-    // Botones de respaldo
-    const iosBtn = document.getElementById("M; // dummy
-    // (corrige: arriba no debe existir esa línea, la dejo fuera)
-  </script>
+    // Elementos
+    const iosBtn = document.getElementById("iosBtn");
+    const androidBtn = document.getElementById("androidBtn");
+    const primaryBtn = document.getElementById("primaryBtn");
+    const subtitle = document.getElementById("subtitle");
+    const bar = document.getElementById("bar");
 
-  <script>
-    // Botones de respaldo
-    const params2 = new URLSearchParams(window.location.search);
-    const src2 = (params2.get("src") || "nfc").trim();
-
-    const APP_STORE_BASE2 = "https://apps.apple.com/mx/app/lo-nuestro-app/id6738976783";
-    const PLAY_STORE_BASE2 = "https://play.google.com/store/apps/details?id=com.lonuestroapp.app&pcampaignid=web_share";
-    const WEB_FALLBACK_URL2 = "/#unete";
-
-    const appStoreUrl2 = APP_STORE_BASE2 + (APP_STORE_BASE2.includes("?") ? "&" : "?") + "ct=" + encodeURIComponent(src2);
-    const playStoreUrl2 = PLAY_STORE_BASE2 + (PLAY_STORE_BASE2.includes("?") ? "&" : "?") + "utm_source=nfc&utm_campaign=" + encodeURIComponent(src2);
-
-    const iosBtn2 = document.getElementById("iosBtn");
-    const androidBtn2 = document.getElementById("androidBtn");
-    const primaryBtn2 = document.getElementById("primaryBtn");
-    const subtitle2 = document.getElementById("subtitle");
-    const bar2 = document.getElementById("bar");
-
-    iosBtn2.href = appStoreUrl2;
-    androidBtn2.href = playStoreUrl2;
+    iosBtn.href = appStoreUrl;
+    androidBtn.href = playStoreUrl;
 
     // Detecta dispositivo
     const ua = navigator.userAgent || "";
     const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
     const isAndroid = /Android/.test(ua);
 
-    const target = isIOS ? appStoreUrl2 : (isAndroid ? playStoreUrl2 : WEB_FALLBACK_URL2);
+    const target = isIOS ? appStoreUrl : (isAndroid ? playStoreUrl : WEB_FALLBACK_URL);
 
     // Ajusta copy + botón principal según dispositivo
     if (isIOS) {
-      subtitle2.textContent = "Detectamos iPhone/iPad. Te llevamos a App Store.";
-      primaryBtn2.textContent = "Abrir App Store";
+      subtitle.textContent = "Detectamos iPhone/iPad. Te llevamos a App Store.";
+      primaryBtn.textContent = "Abrir App Store";
     } else if (isAndroid) {
-      subtitle2.textContent = "Detectamos Android. Te llevamos a Google Play.";
-      primaryBtn2.textContent = "Abrir Google Play";
+      subtitle.textContent = "Detectamos Android. Te llevamos a Google Play.";
+      primaryBtn.textContent = "Abrir Google Play";
     } else {
-      subtitle2.textContent = "Estás en computadora. Te llevamos a la web de Lo Nuestro.";
-      primaryBtn2.textContent = "Abrir Lo Nuestro (Web)";
+      subtitle.textContent = "Estás en computadora. Te llevamos a la web de Lo Nuestro.";
+      primaryBtn.textContent = "Abrir Lo Nuestro (Web)";
     }
 
-    primaryBtn2.href = target;
+    primaryBtn.href = target;
 
-    // Animación: muestra progreso un momento para dar confianza,
-    // luego redirige (rápido, pero no instantáneo).
-    setTimeout(() => bar2.style.width = "55%", 80);
-    setTimeout(() => bar2.style.width = "90%", 380);
-    setTimeout(() => bar2.style.width = "100%", 680);
+    // Animación de progreso (confianza visual)
+    setTimeout(() => bar.style.width = "55%", 80);
+    setTimeout(() => bar.style.width = "90%", 380);
+    setTimeout(() => bar.style.width = "100%", 680);
 
-    // Redirección final
-    setTimeout(() => window.location.replace(target), 820);
+    // Redirección + GA (un solo flujo)
+    const go = () => window.location.replace(target);
+
+    // Espera a que termine la animación y luego manda el evento
+    setTimeout(() => {
+      if (window.gtag) {
+        gtag('event', 'nfc_scan', {
+          source: src,
+          device: isIOS ? 'ios' : (isAndroid ? 'android' : 'other'),
+          event_callback: go
+        });
+        // respaldo por si el callback no corre
+        setTimeout(go, 900);
+      } else {
+        go();
+      }
+    }, 720);
   </script>
 </body>
 </html>
