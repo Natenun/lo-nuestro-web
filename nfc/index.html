@@ -316,16 +316,16 @@
     const WEB_FALLBACK_URL = "/#unete";
 
     // ====== ORIGEN ======
-    // Usa ?src=zn-centro / carniceria / cross248 / etc.
+    // Usa ?src=zn-centro / carniceria / cross248 / etc.    
     const params = new URLSearchParams(window.location.search);
-    const src = (params.get("src") || "nfc").trim();
+    const nfc_origen = (params.get("src") || "nfc").trim(); // antes: src
 
     const pill = document.getElementById("campaignPill");
-    if (src && src !== "nfc") pill.textContent = "📍 Origen: " + src;
+    if (nfc_origen && nfc_origen !== "nfc") pill.textContent = "📍 Origen: " + nfc_origen;
 
     // Links con parámetros
-    const appStoreUrl = APP_STORE_BASE + (APP_STORE_BASE.includes("?") ? "&" : "?") + "ct=" + encodeURIComponent(src);
-    const playStoreUrl = PLAY_STORE_BASE + (PLAY_STORE_BASE.includes("?") ? "&" : "?") + "utm_source=nfc&utm_campaign=" + encodeURIComponent(src);
+    const appStoreUrl = APP_STORE_BASE + (APP_STORE_BASE.includes("?") ? "&" : "?") + "ct=" + encodeURIComponent(nfc_origen);
+    const playStoreUrl = PLAY_STORE_BASE + (PLAY_STORE_BASE.includes("?") ? "&" : "?") + "utm_source=nfc&utm_campaign=" + encodeURIComponent(nfc_origen);
 
     // Elementos
     const iosBtn = document.getElementById("iosBtn");
@@ -368,18 +368,17 @@
 
     // Espera a que termine la animación y luego manda el evento
     setTimeout(() => {
-      if (window.gtag) {
-        gtag('event', 'nfc_scan', {
-          source: src,
-          device: isIOS ? 'ios' : (isAndroid ? 'android' : 'other'),
-          event_callback: go
-        });
-        // respaldo por si el callback no corre
-        setTimeout(go, 900);
-      } else {
-        go();
-      }
-    }, 720);
-  </script>
+    if (window.gtag) {
+      gtag('event', 'nfc_scan', {
+        nfc_origen: nfc_origen, // 👈 antes: source: src
+        nfc_device: isIOS ? 'ios' : (isAndroid ? 'android' : 'other'),
+        event_callback: go
+      });
+      setTimeout(go, 900);
+    } else {
+      go();
+    }
+  }, 720);
+</script>
 </body>
 </html>
