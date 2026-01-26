@@ -372,6 +372,7 @@
       gtag('event', 'nfc_scan', {
         nfc_origen: nfc_origen, // 👈 antes: source: src
         nfc_device: isIOS ? 'ios' : (isAndroid ? 'android' : 'other'),
+        debug_mode: true, // quitar para produccion
         event_callback: go
       });
       setTimeout(go, 900);
