@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lo Nuestro México | World Mini App</title>
+  <style>
+    :root {
+      --bg: #f4f8ff;
+      --card: #ffffff;
+      --primary: #2257ff;
+      --text: #13203a;
+      --muted: #5a6785;
+      --ok: #0c8f4f;
+      --error: #b42318;
+      --border: #d6def0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, #eef3ff 0%, var(--bg) 40%, #ffffff 100%);
+      color: var(--text);
+    }
+    main {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 18px 14px 28px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 8px 26px rgba(26, 38, 74, 0.08);
+    }
+    h1 { font-size: 1.5rem; margin: 0 0 8px; }
+    h2 { font-size: 1.1rem; margin: 0 0 10px; }
+    p { margin: 0 0 10px; line-height: 1.45; }
+    .muted { color: var(--muted); font-size: 0.95rem; }
+    .stack { display: grid; gap: 12px; }
+    label { font-size: 0.92rem; font-weight: 600; }
+    input {
+      width: 100%;
+      padding: 11px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      font-size: 16px;
+    }
+    button {
+      border: 0;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 12px;
+      padding: 12px;
+      font-weight: 700;
+      font-size: 1rem;
+      width: 100%;
+      cursor: pointer;
+    }
+    .result {
+      background: #f6f9ff;
+      border: 1px dashed #b5c5ef;
+      border-radius: 12px;
+      padding: 10px;
+      font-weight: 600;
+    }
+    .status { font-size: 0.92rem; min-height: 20px; }
+    .status.ok { color: var(--ok); }
+    .status.error { color: var(--error); }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="card stack">
+      <header>
+        <h1>Lo Nuestro México</h1>
+        <p><strong>Convierte tus compras en capital</strong></p>
+        <p class="muted">Disponible inicialmente en México para recargas, giftcards, servicios y beneficios locales.</p>
+      </header>
+
+      <div class="stack">
+        <h2>Calculadora de beneficio estimado (5%)</h2>
+        <label for="consumoMensual">Consumo mensual (MXN)</label>
+        <input id="consumoMensual" name="consumoMensual" type="number" min="0" step="0.01" placeholder="Ej. 8000" />
+        <div id="beneficio" class="result">Beneficio estimado: $0.00 MXN</div>
+      </div>
+
+      <form id="interesForm" class="stack" novalidate>
+        <h2>Únete a la lista de interesados</h2>
+
+        <label for="nombre">Nombre</label>
+        <input id="nombre" name="nombre" type="text" required />
+
+        <label for="telefono">Teléfono</label>
+        <input id="telefono" name="telefono" type="tel" required placeholder="10 dígitos o +52XXXXXXXXXX" />
+
+        <label for="ciudad">Ciudad</label>
+        <input id="ciudad" name="ciudad" type="text" required />
+
+        <label for="referido">Referido (opcional)</label>
+        <input id="referido" name="referido" type="text" />
+
+        <button type="submit">Enviar</button>
+        <div id="status" class="status" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
+    import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
+
+    // Firebase config pública (sin secretos). Debe permanecer en cliente para esta mini app.
+    // TODO: integrar MiniKit de World para conectar wallet/identidad y atribución avanzada.
+    const firebaseConfig = {
+      projectId: 'lonuestro-71349'
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const form = document.getElementById('interesForm');
+    const statusEl = document.getElementById('status');
+    const consumoInput = document.getElementById('consumoMensual');
+    const beneficioEl = document.getElementById('beneficio');
+
+    const telefonoRegex = /^(?:\d{10}|\+52\d{10})$/;
+
+    function parseConsumo() {
+      const value = Number(consumoInput.value || 0);
+      return Number.isFinite(value) && value > 0 ? value : 0;
+    }
+
+    function calcularBeneficio(consumo) {
+      return consumo * 0.05;
+    }
+
+    function renderBeneficio() {
+      const beneficio = calcularBeneficio(parseConsumo());
+      beneficioEl.textContent = `Beneficio estimado: $${beneficio.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} MXN`;
+    }
+
+    consumoInput.addEventListener('input', renderBeneficio);
+    renderBeneficio();
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      statusEl.className = 'status';
+      statusEl.textContent = '';
+
+      const nombre = document.getElementById('nombre').value.trim();
+      const telefono = document.getElementById('telefono').value.trim();
+      const ciudad = document.getElementById('ciudad').value.trim();
+      const referido = document.getElementById('referido').value.trim();
+      const consumoMensual = parseConsumo();
+      const beneficioEstimado = calcularBeneficio(consumoMensual);
+
+      if (!nombre || !telefono || !ciudad) {
+        statusEl.classList.add('error');
+        statusEl.textContent = 'Completa nombre, teléfono y ciudad.';
+        return;
+      }
+
+      if (!telefonoRegex.test(telefono)) {
+        statusEl.classList.add('error');
+        statusEl.textContent = 'Ingresa un teléfono válido de MX: 10 dígitos o +52 seguido de 10 dígitos.';
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, 'world_interesados'), {
+          nombre,
+          telefono,
+          ciudad,
+          referido,
+          consumoMensual,
+          beneficioEstimado,
+          pais: 'MX',
+          origen: 'world_mini_app',
+          createdAt: serverTimestamp()
+        });
+
+        statusEl.classList.add('ok');
+        statusEl.textContent = 'Registro enviado. ¡Gracias por tu interés!';
+        form.reset();
+        renderBeneficio();
+      } catch (error) {
+        console.error(error);
+        statusEl.classList.add('error');
+        statusEl.textContent = 'No fue posible enviar tu registro. Intenta de nuevo.';
+      }
+    });
+  </script>
+</body>
+</html>
