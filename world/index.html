@@ -38,6 +38,13 @@
     h2 { font-size: 1.1rem; margin: 0 0 10px; }
     p { margin: 0 0 10px; line-height: 1.45; }
     .muted { color: var(--muted); font-size: 0.95rem; }
+    .miniapp-state {
+      display: inline-block;
+      margin-top: 2px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      opacity: 0.9;
+    }
     .stack { display: grid; gap: 12px; }
     label { font-size: 0.92rem; font-weight: 600; }
     input {
@@ -77,6 +84,7 @@
         <h1>Lo Nuestro México</h1>
         <p><strong>Convierte tus compras en capital</strong></p>
         <p class="muted">Disponible inicialmente en México para recargas, giftcards, servicios y beneficios locales.</p>
+        <p id="miniAppStatus" class="miniapp-state" aria-live="polite">Vista web</p>
       </header>
 
       <div class="stack">
@@ -110,9 +118,10 @@
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
     import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
+    import { MiniKit } from 'https://cdn.jsdelivr.net/npm/@worldcoin/minikit-js@latest/+esm';
 
     // Firebase config pública (sin secretos). Debe permanecer en cliente para esta mini app.
-    // TODO: integrar MiniKit de World para conectar wallet/identidad y atribución avanzada.
+    // TODO: integrar autenticación backend para anti-spam y límites de tasa por dispositivo/usuario.
     const firebaseConfig = {
       projectId: 'lonuestro-71349'
     };
@@ -124,8 +133,27 @@
     const statusEl = document.getElementById('status');
     const consumoInput = document.getElementById('consumoMensual');
     const beneficioEl = document.getElementById('beneficio');
+    const miniAppStatusEl = document.getElementById('miniAppStatus');
 
     const telefonoRegex = /^(?:\d{10}|\+52\d{10})$/;
+
+    function initMiniKitStatus() {
+      let isWorldMiniApp = false;
+
+      try {
+        MiniKit.install();
+        isWorldMiniApp = Boolean(MiniKit.isInstalled());
+      } catch (error) {
+        console.warn('MiniKit no disponible en este entorno:', error);
+      }
+
+      miniAppStatusEl.textContent = isWorldMiniApp ? 'Mini App activa en World' : 'Vista web';
+
+      // TODO(World ID): implementar verificación opcional con IDKit (proof de unique human) en flujo de registro.
+      // TODO(World ID): mover la validación del proof al backend antes de marcar la verificación como obligatoria.
+      // TODO(World ID): almacenar nullifier_hash/proof metadata en Firestore para prevención de duplicados por humano.
+      // TODO(World ID): no bloquear UX hasta definir criterio de fallback para usuarios sin verificación.
+    }
 
     function parseConsumo() {
       const value = Number(consumoInput.value || 0);
@@ -143,6 +171,7 @@
 
     consumoInput.addEventListener('input', renderBeneficio);
     renderBeneficio();
+    initMiniKitStatus();
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -178,6 +207,7 @@
           beneficioEstimado,
           pais: 'MX',
           origen: 'world_mini_app',
+          miniAppEnvironment: miniAppStatusEl.textContent === 'Mini App activa en World' ? 'world_app' : 'web',
           createdAt: serverTimestamp()
         });
 
